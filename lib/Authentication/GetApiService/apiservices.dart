@@ -403,7 +403,7 @@ Future<dynamic> GetHoldings() async {
           return [];
         }
       } else {
-        print("Data retrieval success but no results in holdingsList");
+        print("Data retrieval success but no results in ");
         return [];
       }
     } catch (e) {
