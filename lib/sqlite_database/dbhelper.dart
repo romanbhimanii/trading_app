@@ -49,7 +49,7 @@ class DatabaseHelper {
     ''');
       print("watchlist_instruments table created.");
     } catch (e) {
-      print("Error creating tables: $e");
+      print("Error creating tabless: $e");
     }
   }
 
