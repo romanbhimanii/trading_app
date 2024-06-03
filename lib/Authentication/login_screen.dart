@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           errorMessage: 'username',
                           obscureText: false,
                         ),
-                         const SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         CustomTextFormField(
@@ -202,6 +202,5 @@ class _LoginScreenState extends State<LoginScreen> {
       print(e.toString());
       return {'status': false, 'message': 'An error occurred'};
     }
-    
   }
 }

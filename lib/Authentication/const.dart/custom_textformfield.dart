@@ -7,7 +7,8 @@ class CustomTextFormField extends StatelessWidget {
   final String errorMessage;
   bool obscureText = false;
 
-  CustomTextFormField({super.key, 
+  CustomTextFormField({
+    super.key,
     required this.controller,
     required this.labelText,
     required this.icon,
@@ -39,7 +40,6 @@ class CustomTextFormField extends StatelessWidget {
         prefixIcon: Icon(icon),
         labelText: labelText,
       ),
-
       obscureText: obscureText,
       validator: (value) {
         if (value == null || value.isEmpty) {

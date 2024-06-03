@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:tradingapp/Authentication/auth_services.dart';
+import 'package:tradingapp/Screens/Mainscreens/Dashboard/FII/DII/fii_dii_screen.dart';
+import 'package:tradingapp/model/userProfile_model.dart';
 
 class ApiService {
   final String baseUrl = "http://14.97.72.10:3000";
@@ -33,7 +36,7 @@ class ApiService {
           });
 
       // print("Response Status: ${response.statusCode}");
-      // print("Response Body: ${response.body}");
+       print("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
@@ -183,8 +186,9 @@ class ApiService {
 
   Future<Map<String, Map<String, double>>> fetchFiiDiiDetails() async {
     try {
+      print("fetchFiiDiiDetails called");
       final response = await http.post(Uri.parse(
-              //   'https://api.sensibull.com/v1/fii_dii_details_v2?year_month=2024-May'
+              // 'https://api.sensibull.com/v1/fii_dii_details_v2?year_month=2024-May'
               'http://192.168.130.48:9010/v1/get_fii_history_data/'),
           body: jsonEncode(
             {},
@@ -194,8 +198,9 @@ class ApiService {
             'accept': 'application/json',
           });
 //  'http://192.168.130.48:9010/v1/get_fii_history_data/'
-
+      print(response.statusCode);
       if (response.statusCode == 200) {
+        print(response.body);
         Map<String, Map<String, double>> result = {};
         final jsonData = jsonDecode(response.body);
         final successData = jsonData['success'];
@@ -225,6 +230,16 @@ class ApiService {
       // print("Exception caught in FII DII API: $e");
     }
   }
+
+Future<Map<String, dynamic>> fetchFiiDiiDetailsMonthly() async {
+  final response = await http.get(Uri.parse('http://192.168.130.48:9010/v1/get_fii_data_cash_fo_index_stocks/?type=cash'));
+
+  if (response.statusCode == 200) {
+    return json.decode(response.body) as Map<String, dynamic>;
+  } else {
+    throw Exception('Failed to load FII/DII data');
+  }
+}
 
   Future<dynamic> GetNSCEMMaster() async {
     String? apiToken =
@@ -256,12 +271,11 @@ class ApiService {
   }
 
   Future<dynamic> GetPosition() async {
-    String? apiToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBQkMxIiwibWVtYmVySUQiOiJBUkhBTSIsInNvdXJjZSI6IkVOVEVSUFJJU0VXRUIiLCJpYXQiOjE3MTY3ODE5ODUsImV4cCI6MTcxNjg2ODM4NX0._H8EE_4vmtJkJp3huTzEN5p6oiOvX4K36QghyE822qk";
+    String? apiToken = await getToken();
     try {
       final response = await http.get(
         Uri.parse(
-            'http://14.97.72.10:3000/enterprise/portfolio/positions?dayOrNet=dayWise&clientID=PRO1&userID=ABC1'),
+            'http://14.97.72.10:3000/enterprise/portfolio/positions?dayOrNet=dayWise&clientID=A0031&userID=A0031'),
         headers: {
           'Authorization': '$apiToken',
           'Content-Type': 'application/json'
@@ -288,12 +302,11 @@ class ApiService {
   }
 
   Future<dynamic> GetTrades() async {
-    String? apiToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBQkMxIiwibWVtYmVySUQiOiJBUkhBTSIsInNvdXJjZSI6IkVOVEVSUFJJU0VXRUIiLCJpYXQiOjE3MTY3ODE5ODUsImV4cCI6MTcxNjg2ODM4NX0._H8EE_4vmtJkJp3huTzEN5p6oiOvX4K36QghyE822qk";
+    String? apiToken = await getToken();
     try {
       final response = await http.get(
         Uri.parse(
-            'http://14.97.72.10:3000/enterprise/orders/trades?clientID=PRO1&userID=ABC1'),
+            'http://14.97.72.10:3000/enterprise/orders/trades?clientID=A0031&userID=A0031'),
         headers: {
           'Authorization': '$apiToken',
           'Content-Type': 'application/json'
@@ -319,12 +332,12 @@ class ApiService {
   }
 
   Future<dynamic> GetOrder() async {
-    String? apiToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBQkMxIiwibWVtYmVySUQiOiJBUkhBTSIsInNvdXJjZSI6IkVOVEVSUFJJU0VXRUIiLCJpYXQiOjE3MTY3ODE5ODUsImV4cCI6MTcxNjg2ODM4NX0._H8EE_4vmtJkJp3huTzEN5p6oiOvX4K36QghyE822qk";
+    String? apiToken = await getToken();
+
     try {
       final response = await http.get(
         Uri.parse(
-            'http://14.97.72.10:3000/enterprise/orders?clientID=PRO1&userID=ABC1'),
+            'http://14.97.72.10:3000/enterprise/orders?clientID=A0031&userID=A0031'),
         headers: {
           'Authorization': '$apiToken',
           'Content-Type': 'application/json'
@@ -349,21 +362,19 @@ class ApiService {
     }
   }
 
-
   Future<dynamic> GetOrderHistroy() async {
-    String? apiToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBQkMxIiwibWVtYmVySUQiOiJBUkhBTSIsInNvdXJjZSI6IkVOVEVSUFJJU0VXRUIiLCJpYXQiOjE3MTY3ODE5ODUsImV4cCI6MTcxNjg2ODM4NX0._H8EE_4vmtJkJp3huTzEN5p6oiOvX4K36QghyE822qk";
+    String? apiToken = await getToken();
+
     try {
       final response = await http.get(
         Uri.parse(
-            'http://14.97.72.10:3000/enterprise/reports/trade?clientID=PRO1&userID=ABC1&exchangeSegment=NSEFO&fromDate=2024-05-21&toDate=2024-05-24'),
+            'http://14.97.72.10:3000/enterprise/reports/trade?clientID=A0031&userID=A0031&exchangeSegment=NSEFO&fromDate=2024-05-21&toDate=2024-05-31'),
         headers: {
           'Authorization': '$apiToken',
           'Content-Type': 'application/json'
         },
       );
       if (response.statusCode == 200) {
-    
         var data = json.decode(response.body);
         if (data['type'] == 'success' && data['result'] != null) {
           for (var item in data['result']['tradeReportList']) {}
@@ -381,7 +392,8 @@ class ApiService {
       return [];
     }
   }
-Future<dynamic> GetHoldings() async {
+
+  Future<dynamic> GetHoldings() async {
     String? apiToken = await getToken();
     try {
       final response = await http.get(
@@ -392,8 +404,8 @@ Future<dynamic> GetHoldings() async {
           'Content-Type': 'application/json'
         },
       );
+
       if (response.statusCode == 200) {
-    print(response.body);
         var data = json.decode(response.body);
         if (data['type'] == 'success' && data['result'] != null) {
           for (var item in data['result']['holdingsList']) {}
@@ -412,4 +424,110 @@ Future<dynamic> GetHoldings() async {
     }
   }
 
+  Future<dynamic> GetInstrumentByID(
+      String exchangeInstrumentID, String exchangeSegment) async {
+    final String? apiToken = await getToken();
+    if (apiToken == null) {
+      throw Exception('Authentication token is not available.');
+    }
+
+    try {
+      var headers = {
+        'Authorization': apiToken,
+        'Content-Type': 'application/json'
+      };
+      var body = json.encode({
+        "source": "WebAPI",
+        "instruments": [
+          {
+            "exchangeSegment": exchangeSegment,
+            "exchangeInstrumentID": exchangeInstrumentID
+          }
+        ]
+      });
+
+      var response = await http.post(
+        Uri.parse(
+            'http://14.97.72.10:3000/apimarketdata/search/instrumentsbyid'),
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        if (data['type'] == 'success' && data['result'] != null) {
+          return data['result'][0]["DisplayName"].toString();
+        } else {
+          print(
+              "Data retrieval success but no resultsin SerachInsturmentBYId in portfolio");
+          return "0";
+        }
+      } else if (response.statusCode == 401) {
+        throw Exception(
+            'Unauthorized: Please check your credentials or token validity.');
+      } else if (response.statusCode == 404) {
+        throw Exception('Endpoint not found: Please check the URL.');
+      } else {
+        throw Exception(
+            'Failed to load instruments with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Exception caught in SerachInsturmentBYId: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> placeOrder(Map<String, dynamic> orderDetails) async {
+  try {print("tryis calling");
+final String? apiToken = await getToken();
+      final response = await http.post(
+      Uri.parse('http://14.97.72.10:3000/enterprise/orders'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': apiToken.toString(),
+      },
+      body: jsonEncode(orderDetails),
+    );
+print(response.body);
+    if (response.statusCode != 200) {
+      throw Exception('Failed to place order');
+    } else {
+      Get.snackbar('Order Placed', 'Order placed successfully');
+    }
+  }
+  catch (e) {
+    print(e);
+  }
+}
+Future<UserProfile> fetchUserProfile(String token) async {
+    String? token = await getToken();
+    if (token == null) {
+      throw Exception('User is not logged in');
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://14.97.72.10:3000/enterprise/user/profile?clientID=A0031&userID=A0031'),
+        headers: {
+          'Authorization': token,
+        },
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        print(response.body);
+        return UserProfile.fromJson(jsonDecode(response.body));
+      } else {
+        if (response.statusCode == 401) {
+          // Handle unauthorized error
+          throw Exception('Unauthorized');
+        }
+        throw Exception('Failed to load user profile');
+      }
+    } catch (e) {
+      // This will catch any exceptions thrown from the try block
+      print('Caught error: $e');
+      throw Exception('Failed to load user profile due to an error: $e');
+    }
+  }
 }

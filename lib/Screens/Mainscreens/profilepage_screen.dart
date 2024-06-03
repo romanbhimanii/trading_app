@@ -7,72 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media_flutter/social_media_flutter.dart';
+import 'package:tradingapp/GetApiService/apiservices.dart';
 import 'package:tradingapp/Screens/buy_sell_screen.dart';
 import 'package:tradingapp/Authentication/auth_services.dart';
 import 'package:tradingapp/Authentication/login_screen.dart';
-
-class UserProfile {
-  // Define all fields from the API response here
-  String clientId;
-  String clientName;
-  String emailId;
-  String mobileNo;
-  String pan;
-  String dematAccountNumber;
-  bool includeInAutoSquareoff;
-  bool includeInAutoSquareoffBlocked;
-  bool isProClient;
-  bool isInvestorClient;
-  String residentialAddress;
-  String officeAddress;
-  String dateOfBirth;
-  List<Map<String, dynamic>> clientBankInfoList;
-  Map<String, dynamic> clientExchangeDetailsList;
-  bool isPOAEnabled;
-
-  UserProfile({
-    required this.clientId,
-    required this.clientName,
-    required this.emailId,
-    required this.mobileNo,
-    required this.pan,
-    required this.dematAccountNumber,
-    required this.includeInAutoSquareoff,
-    required this.includeInAutoSquareoffBlocked,
-    required this.isProClient,
-    required this.isInvestorClient,
-    required this.residentialAddress,
-    required this.officeAddress,
-    required this.dateOfBirth,
-    required this.clientBankInfoList,
-    required this.clientExchangeDetailsList,
-    required this.isPOAEnabled,
-  });
-
-  factory UserProfile.fromJson(Map<String, dynamic> json) {
-    return UserProfile(
-      clientId: json['result']['ClientId'].toString() ?? '',
-      clientName: json['result']['ClientName'] ?? '',
-      emailId: json['result']['EmailId'] ?? '',
-      mobileNo: json['result']['MobileNo'] ?? '',
-      pan: json['result']['PAN'] ?? '',
-      dematAccountNumber: json['result']['DematAccountNumber'] ?? '',
-      includeInAutoSquareoff: json['result']['IncludeInAutoSquareoff'] ?? false,
-      includeInAutoSquareoffBlocked:
-          json['result']['IncludeInAutoSquareoffBlocked'] ?? false,
-      isProClient: json['result']['IsProClient'] ?? false,
-      isInvestorClient: json['result']['IsInvestorClient'] ?? false,
-      residentialAddress: json['result']['ResidentialAddress'] ?? '',
-      officeAddress: json['result']['OfficeAddress'] ?? '',
-      dateOfBirth: json['result']['DateOfBirth'] ?? '',
-      clientBankInfoList: List<Map<String, dynamic>>.from(
-          json['result']['ClientBankInfoList'] ?? []),
-      clientExchangeDetailsList:
-          json['result']['ClientExchangeDetailsList'] ?? {},
-      isPOAEnabled: json['result']['IsPOAEnabled'] ?? false,
-    );
-  }
-}
+import 'package:tradingapp/model/userProfile_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -85,38 +24,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
-  }
-
-  Future<UserProfile> fetchUserProfile(String token) async {
-    String? token = await getToken();
-    if (token == null) {
-      throw Exception('User is not logged in');
-    }
-
-    try {
-      final response = await http.get(
-        Uri.parse(
-            'http://14.97.72.10:3000/enterprise/user/profile?clientID=A0031&userID=A0031'),
-        headers: {
-          'Authorization': token,
-        },
-      );
-      print(response.body);
-      if (response.statusCode == 200) {
-        print(response.body);
-        return UserProfile.fromJson(jsonDecode(response.body));
-      } else {
-        if (response.statusCode == 401) {
-          // Handle unauthorized error
-          throw Exception('Unauthorized');
-        }
-        throw Exception('Failed to load user profile');
-      }
-    } catch (e) {
-      // This will catch any exceptions thrown from the try block
-      print('Caught error: $e');
-      throw Exception('Failed to load user profile due to an error: $e');
-    }
   }
 
   final String token =
@@ -149,9 +56,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: Container(
             child: FutureBuilder<UserProfile>(
-              future: fetchUserProfile(token),
+              future: ApiService().fetchUserProfile(token),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
+
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -166,6 +74,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              
+                            
+                            
+
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

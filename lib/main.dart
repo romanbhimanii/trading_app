@@ -5,15 +5,15 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradingapp/Authentication/Login_bloc/login_bloc.dart';
-import 'package:tradingapp/Screens/Mainscreens/changenotifier.dart';
-import 'package:tradingapp/Screens/Mainscreens/dashboard_screen.dart';
+import 'package:tradingapp/Utils/changenotifier.dart';
+import 'package:tradingapp/Screens/Mainscreens/Dashboard/dashboard_screen.dart';
 import 'package:tradingapp/Authentication/login_screen.dart';
-import 'package:tradingapp/Authentication/main_screen.dart';
+import 'package:tradingapp/Utils/Bottom_nav_bar_screen.dart';
 import 'package:tradingapp/Screens/Mainscreens/position_screen.dart';
 import 'package:tradingapp/Sockets/market_feed_scoket.dart';
 import 'package:tradingapp/master/nscm_provider.dart';
 
-import 'Authentication/GetApiService/apiservices.dart';
+import 'GetApiService/apiservices.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +42,7 @@ void main() async {
           value: marketFeedSocket,
           child: MyApp(),
         ),
-        
+
         // ChangeNotifierProvider(
         //   create: (context) => NscmDataProvider(),
         // ),
@@ -53,9 +53,9 @@ void main() async {
           create: (BuildContext context) => LoginBloc(),
         ),
         ChangeNotifierProvider(
-      create: (context) => TradeProvider(),
-      child: MyApp(),
-    ),
+          create: (context) => TradeProvider(),
+          child: MyApp(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -73,6 +73,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'My App',
+      debugShowCheckedModeBanner: false,
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(

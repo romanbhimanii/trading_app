@@ -10,7 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:tradingapp/Screens/fii_dii_screen.dart';
+import 'package:tradingapp/Screens/Mainscreens/Dashboard/highestRetrun&Sectrol/Sectoral_themes_screen.dart';
+import 'package:tradingapp/Screens/Mainscreens/Dashboard/highestRetrun&Sectrol/highest_return_screen.dart';
+import 'package:tradingapp/Screens/Mainscreens/Dashboard/FII/DII/fii_dii_screen.dart';
 import 'package:tradingapp/Screens/Mainscreens/profilepage_screen.dart';
 import 'package:tradingapp/Authentication/auth_services.dart';
 import 'package:tradingapp/Sockets/market_feed_scoket.dart';
@@ -73,70 +75,6 @@ class _DashboardScreenState extends State<DashboardScreen>
               .toString(),
     }
   ];
-  final List<Map<String, dynamic>> stocks = [
-    {
-      'name': 'NIFTY',
-      'price': 15000,
-      'percentage': '(0.5%)',
-      'change': '+90.42'
-    },
-    {
-      'name': 'BANKNIFTY',
-      'price': 35000,
-      'percentage': '-(0.2%)',
-      'change': '+34.42'
-    },
-    {
-      'name': 'DOW JONES',
-      'price': 34000,
-      'percentage': '(0.1%)',
-      'change': '-90.42'
-    },
-    {
-      'name': 'SENSEX',
-      'price': 50000,
-      'percentage': '(0.3%)',
-      'change': '-8.42'
-    },
-    {
-      'name': 'MIDCPNIFTY',
-      'price': 20000,
-      'percentage': '-(0.1%)',
-      'change': '+0.42'
-    },
-  ];
-// //BlocConsumer<LoginBloc, LoginState>(
-//           listener: (context, state) {
-//             print(state);
-//             if (state is LoginSuccess) {
-//               Get.snackbar('Success', state.message.toString());
-//               Get.to(
-//                   () => ValidPasswordScreen(userID: _usernameController.text));
-//             } else if (state is LoginFailure) {
-//               Get.snackbar('Error', state.error.toString());
-//             }
-//             // TODO: implement listener
-//           },
-//           builder: (context, state) {
-//             if (state is LoginLoading) {
-//               return const Center(child: CircularProgressIndicator());
-//             } else {
-//               return Padding(
-// //                 padding: con
-//  @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Consumer<MarketFeedSocket>(
-//           builder: (context, feed, child) {
-//             return feed.marketData.isEmpty
-//                 ? CircularProgressIndicator()
-//                 : DashboardScreen();
-//                 // : MarketDataWidget(feed.marketData);
-//           },
-//         ),
-//       ),
-//     );
 
   @override
   Widget build(BuildContext context) {
@@ -498,65 +436,65 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       ]),
                                                 )),
                                           ),
-                                          Expanded(
-                                            child: Card(
-                                                color: Colors.white,
-                                                child: Container(
-                                                  width: 80,
-                                                  height: 80,
-                                                  child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Stack(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  height: 40,
-                                                                  width: 40,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color: Colors
-                                                                        .blue
-                                                                        .withOpacity(
-                                                                            0.1),
-                                                                  ),
-                                                                ),
-                                                                IconButton(
-                                                                    onPressed:
-                                                                        () {},
-                                                                    icon: Icon(
-                                                                      Icons
-                                                                          .star_border_outlined,
-                                                                      semanticLabel:
-                                                                          'Trxt',
-                                                                      color: Colors
-                                                                          .blue,
-                                                                    )),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Text("ETF"),
-                                                      ]),
-                                                )),
-                                          ),
+                                          // Expanded(
+                                          //   child: Card(
+                                          //       color: Colors.white,
+                                          //       child: Container(
+                                          //         width: 80,
+                                          //         height: 80,
+                                          //         child: Column(
+                                          //             mainAxisAlignment:
+                                          //                 MainAxisAlignment
+                                          //                     .center,
+                                          //             crossAxisAlignment:
+                                          //                 CrossAxisAlignment
+                                          //                     .center,
+                                          //             children: [
+                                          //               Row(
+                                          //                 mainAxisAlignment:
+                                          //                     MainAxisAlignment
+                                          //                         .center,
+                                          //                 crossAxisAlignment:
+                                          //                     CrossAxisAlignment
+                                          //                         .center,
+                                          //                 children: [
+                                          //                   Stack(
+                                          //                     alignment:
+                                          //                         Alignment
+                                          //                             .center,
+                                          //                     children: [
+                                          //                       Container(
+                                          //                         height: 40,
+                                          //                         width: 40,
+                                          //                         decoration:
+                                          //                             BoxDecoration(
+                                          //                           shape: BoxShape
+                                          //                               .circle,
+                                          //                           color: Colors
+                                          //                               .blue
+                                          //                               .withOpacity(
+                                          //                                   0.1),
+                                          //                         ),
+                                          //                       ),
+                                          //                       IconButton(
+                                          //                           onPressed:
+                                          //                               () {},
+                                          //                           icon: Icon(
+                                          //                             Icons
+                                          //                                 .star_border_outlined,
+                                          //                             semanticLabel:
+                                          //                                 'Trxt',
+                                          //                             color: Colors
+                                          //                                 .blue,
+                                          //                           )),
+                                          //                     ],
+                                          //                   ),
+                                          //                 ],
+                                          //               ),
+                                          //               Text("ETF"),
+                                          //             ]),
+                                          //       )),
+                                          // ),
                                           Expanded(
                                             child: Card(
                                                 color: Colors.white,
@@ -694,91 +632,107 @@ class _DashboardScreenState extends State<DashboardScreen>
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                    color: Colors.grey[300]!),
-                                              ),
-                                              height: 100,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 40,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: Colors.blue
-                                                              .withOpacity(0.1),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    HighestReturnScreen());
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color: Colors.grey[300]!),
+                                                ),
+                                                height: 100,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        Container(
+                                                          height: 40,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.4,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color: Colors.blue
+                                                                .withOpacity(
+                                                                    0.1),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Icon(
-                                                        Icons.wallet_giftcard,
-                                                        color: Colors.blue,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Text("Offers & Rewards")
-                                                ],
+                                                        Icon(
+                                                          Icons.wallet_giftcard,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text("Highest Return")
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                    color: Colors.grey[300]!),
-                                              ),
-                                              height: 100,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 40,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: Colors.blue
-                                                              .withOpacity(0.1),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.to(() =>
+                                                    SectoralThemesScreen());
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color: Colors.grey[300]!),
+                                                ),
+                                                height: 100,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        Container(
+                                                          height: 40,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.4,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color: Colors.blue
+                                                                .withOpacity(
+                                                                    0.1),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Icon(
-                                                        Icons
-                                                            .health_and_safety_rounded,
-                                                        color: Colors.blue,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Text("Refer & Earn")
-                                                ],
+                                                        Icon(
+                                                          Icons
+                                                              .health_and_safety_rounded,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text("Sectoral Themes")
+                                                  ],
+                                                ),
                                               ),
                                             )
                                           ],
@@ -892,45 +846,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                                         ),
                                       ),
                                     ),
-                                    Card(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      Icon(Icons
-                                                          .repeat_one_rounded),
-                                                      Container(
-                                                        height: 40,
-                                                        width: 40,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: Colors.blue
-                                                              .withOpacity(0.1),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Text("Highest Return"),
-                                                  // Text("Stocks with the highest return over a specific period of time")
-                                                ],
-                                              ),
-                                            ),
-                                            Container()
-                                          ],
-                                        ),
-                                      ),
-                                    ),
                                     Text("data"),
                                   ],
                                 ),
@@ -941,83 +856,18 @@ class _DashboardScreenState extends State<DashboardScreen>
 
                             Container(
                                 child: Container(
-                              color: Colors.black,
                               child: Container(
-                                color: Colors.grey[200],
-                                height: 10,
+                                decoration: BoxDecoration(),
                                 child: Column(
                                   children: [
-                                    MarketDataWidget(feed.bankmarketData),
-                                    Text("data"),
                                     Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      height: 100,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: stocks.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              Get.to(() => ProfileScreen());
-                                            },
-                                            child: Container(
-                                              width: 140,
-                                              child: Container(
-                                                  child: Card(
-                                                borderOnForeground: true,
-                                                color: Colors.white,
-                                                child: Container(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      10, 0, 10, 0),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        stocks[index]['name'],
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                      ),
-                                                      Text(
-                                                          stocks[index]['price']
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .green)),
-                                                      Row(
-                                                        children: [
-                                                          Text(stocks[index]
-                                                                  ['change']
-                                                              .toString()),
-                                                          Text(stocks[index]
-                                                                  ['percentage']
-                                                              .toString()),
-                                                        ],
-                                                      ),
-                                                      Text("dsddsdsd"),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    MarketDataWidget(
-                                      marketFeedSocket.bankmarketData,
-                                    ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: MarketDataWidget(
+                                            feed.bankmarketData)),
                                     Text("")
                                   ],
                                 ),
@@ -1079,7 +929,11 @@ class _MarketDataWidgetState extends State<MarketDataWidget> {
         stocks.where((stock) => stock != "Unknown Index").toList();
     return SingleChildScrollView(
       child: Container(
-        color: Colors.white,
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Column(
@@ -1096,50 +950,50 @@ class _MarketDataWidgetState extends State<MarketDataWidget> {
               SizedBox(
                 height: 10,
               ),
-              TextButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return StatefulBuilder(
-                        builder:
-                            (BuildContext context, StateSetter modalSetState) {
-                          return ReorderableListView.builder(
-                            itemCount: stocks.length,
-                            onReorder: (oldIndex, newIndex) {
-                              modalSetState(() {
-                                if (newIndex > oldIndex) {
-                                  newIndex -= 1;
-                                }
-                                final Map<String, dynamic> item =
-                                    stocks.removeAt(oldIndex);
-                                stocks.insert(newIndex, item);
-                              });
-                              setState(() {});
-                            },
-                            itemBuilder: (context, index) {
-                              return Dismissible(
-                                key: Key(stocks[index]['name']),
-                                onDismissed: (direction) {
-                                  setState(() {
-                                    stocks.removeAt(index);
-                                  });
-                                  setState(() {});
-                                },
-                                child: ListTile(
-                                  title: Text(stocks[index]['name']),
-                                  trailing: Icon(Icons.menu),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-                child: Text('Edit Stocks'),
-              ),
+              // TextButton(
+              //   onPressed: () {
+              //     showModalBottomSheet(
+              //       context: context,
+              //       builder: (context) {
+              //         return StatefulBuilder(
+              //           builder:
+              //               (BuildContext context, StateSetter modalSetState) {
+              //             return ReorderableListView.builder(
+              //               itemCount: stocks.length,
+              //               onReorder: (oldIndex, newIndex) {
+              //                 modalSetState(() {
+              //                   if (newIndex > oldIndex) {
+              //                     newIndex -= 1;
+              //                   }
+              //                   final Map<String, dynamic> item =
+              //                       stocks.removeAt(oldIndex);
+              //                   stocks.insert(newIndex, item);
+              //                 });
+              //                 setState(() {});
+              //               },
+              //               itemBuilder: (context, index) {
+              //                 return Dismissible(
+              //                   key: Key(stocks[index]['name']),
+              //                   onDismissed: (direction) {
+              //                     setState(() {
+              //                       stocks.removeAt(index);
+              //                     });
+              //                     setState(() {});
+              //                   },
+              //                   child: ListTile(
+              //                     title: Text(stocks[index]['name']),
+              //                     trailing: Icon(Icons.menu),
+              //                   ),
+              //                 );
+              //               },
+              //             );
+              //           },
+              //         );
+              //       },
+              //     );
+              //   },
+              //   child: Text('Edit Stocks'),
+              // ),
               Container(
                 height: 90,
                 child: ListView.builder(

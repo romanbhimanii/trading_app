@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:tradingapp/Authentication/main_screen.dart';
+import 'package:tradingapp/Utils/Bottom_nav_bar_screen.dart';
 
 class ValidPasswordScreen extends StatefulWidget {
   String userID;
