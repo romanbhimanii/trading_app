@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradingapp/Authentication/Login_bloc/login_bloc.dart';
+import 'package:tradingapp/Screens/Mainscreens/profilepage_screen.dart';
 import 'package:tradingapp/Utils/changenotifier.dart';
 import 'package:tradingapp/Screens/Mainscreens/Dashboard/dashboard_screen.dart';
 import 'package:tradingapp/Authentication/login_screen.dart';
@@ -23,12 +24,7 @@ void main() async {
     value: marketFeedSocket,
     child: MyApp(),
   );
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26000.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26001.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26002.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26003.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26004.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26005.toString());
+  
   //await ApiService().GetNSCEMMaster();
   // marketFeedSocket.connect();
   // await NscmDataProvider().fetchAndStoreData();
@@ -83,6 +79,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => NscmDataProvider(),
           ),
+          ChangeNotifierProvider(create: (_) => BalanceProvider()),
         ],
         child: ChangeNotifierProvider(
           create: (_) => MarketFeedSocket()..connect(),

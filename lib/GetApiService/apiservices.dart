@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:tradingapp/Authentication/auth_services.dart';
 import 'package:tradingapp/Screens/Mainscreens/Dashboard/FII/DII/fii_dii_screen.dart';
+import 'package:tradingapp/model/trade_balance_model.dart';
 import 'package:tradingapp/model/userProfile_model.dart';
 
 class ApiService {
@@ -36,7 +37,7 @@ class ApiService {
           });
 
       // print("Response Status: ${response.statusCode}");
-       print("Response Body: ${response.body}");
+      print("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
@@ -231,15 +232,16 @@ class ApiService {
     }
   }
 
-Future<Map<String, dynamic>> fetchFiiDiiDetailsMonthly() async {
-  final response = await http.get(Uri.parse('http://192.168.130.48:9010/v1/get_fii_data_cash_fo_index_stocks/?type=cash'));
-
-  if (response.statusCode == 200) {
-    return json.decode(response.body) as Map<String, dynamic>;
-  } else {
-    throw Exception('Failed to load FII/DII data');
+  Future<Map<String, dynamic>> fetchFiiDiiDetailsMonthly() async {
+    final response = await http.get(Uri.parse(
+        'http://192.168.130.48:9010/v1/get_fii_data_cash_fo_index_stocks/?type=cash'));
+print(response.body);
+    if (response.statusCode == 200) {
+      return json.decode(response.body) as Map<String, dynamic>;
+    } else {
+      throw Exception('Failed to load FII/DII data');
+    }
   }
-}
 
   Future<dynamic> GetNSCEMMaster() async {
     String? apiToken =
@@ -478,28 +480,29 @@ Future<Map<String, dynamic>> fetchFiiDiiDetailsMonthly() async {
   }
 
   Future<void> placeOrder(Map<String, dynamic> orderDetails) async {
-  try {print("tryis calling");
-final String? apiToken = await getToken();
+    try {
+      print("tryis calling");
+      final String? apiToken = await getToken();
       final response = await http.post(
-      Uri.parse('http://14.97.72.10:3000/enterprise/orders'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': apiToken.toString(),
-      },
-      body: jsonEncode(orderDetails),
-    );
-print(response.body);
-    if (response.statusCode != 200) {
-      throw Exception('Failed to place order');
-    } else {
-      Get.snackbar('Order Placed', 'Order placed successfully');
+        Uri.parse('http://14.97.72.10:3000/enterprise/orders'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': apiToken.toString(),
+        },
+        body: jsonEncode(orderDetails),
+      );
+      print(response.body);
+      if (response.statusCode != 200) {
+        throw Exception('Failed to place order');
+      } else {
+        Get.snackbar('Order Placed', 'Order placed successfully');
+      }
+    } catch (e) {
+      print(e);
     }
   }
-  catch (e) {
-    print(e);
-  }
-}
-Future<UserProfile> fetchUserProfile(String token) async {
+
+  Future<UserProfile> fetchUserProfile(String token) async {
     String? token = await getToken();
     if (token == null) {
       throw Exception('User is not logged in');
@@ -526,6 +529,42 @@ Future<UserProfile> fetchUserProfile(String token) async {
       }
     } catch (e) {
       // This will catch any exceptions thrown from the try block
+      print('Caught error: $e');
+      throw Exception('Failed to load user profile due to an error: $e');
+    }
+  }
+
+  Future<Balance> GetBalance() async {
+    String? token = await getToken();
+    if (token == null) {
+      throw Exception('User is not logged in');
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://14.97.72.10:3000/enterprise/user/balance?clientID=A0031&userID=A0031'),
+        headers: {
+          'Authorization': token,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final balanceList = responseData['result']['BalanceList'];
+        final filteredBalances = Balance.filterBalances(balanceList);
+        if (filteredBalances.isEmpty) {
+          throw Exception('No balance with limitHeader "ALL|ALL|ALL" found');
+        }
+        print("3456789876545678${filteredBalances.first}");
+        return filteredBalances.first ;
+      } else {
+        if (response.statusCode == 401) {
+          throw Exception('Unauthorized');
+        }
+        throw Exception('Failed to load user profile');
+      }
+    } catch (e) {
       print('Caught error: $e');
       throw Exception('Failed to load user profile due to an error: $e');
     }

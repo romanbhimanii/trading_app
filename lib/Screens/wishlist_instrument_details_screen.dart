@@ -34,11 +34,14 @@ class _ViewMoreInstrumentDetailScreenState
   @override
   void initState() {
     super.initState();
+    ApiService().MarketInstrumentSubscribe(
+      ExchangeConverter().getExchangeSegmentName(int.parse(widget.exchangeSegment)), widget.exchangeInstrumentId.toString());
     _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Consumer<MarketFeedSocket>(builder: (context, data, child) {

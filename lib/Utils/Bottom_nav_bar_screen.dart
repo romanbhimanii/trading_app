@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:tradingapp/GetApiService/apiservices.dart';
 
 import 'package:tradingapp/Screens/Mainscreens/Dashboard/dashboard_screen.dart';
 // Assuming this is for the Market tab
@@ -23,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    
+    SubscribeInstrument();
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.transparent,
@@ -31,8 +32,16 @@ class _MainScreenState extends State<MainScreen> {
     );
     // Make Flutter draw behind navigation bar
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    
   }
-
+Future<void> SubscribeInstrument() async {
+   await ApiService().MarketInstrumentSubscribe(1.toString(), 26000.toString());
+  await ApiService().MarketInstrumentSubscribe(1.toString(), 26001.toString());
+  await ApiService().MarketInstrumentSubscribe(1.toString(), 26002.toString());
+  await ApiService().MarketInstrumentSubscribe(1.toString(), 26003.toString());
+  await ApiService().MarketInstrumentSubscribe(1.toString(), 26004.toString());
+  await ApiService().MarketInstrumentSubscribe(1.toString(), 26005.toString());
+  }
   List<Widget> _buildScreens() {
     return [
       DashboardScreen(),

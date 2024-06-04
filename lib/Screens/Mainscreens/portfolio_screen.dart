@@ -42,11 +42,13 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 width: double.infinity,
                 padding: EdgeInsets.all(10),
                 height: 130,
-                decoration: BoxDecoration(gradient: LinearGradient(colors: [
-                  Colors.blue.shade100.withOpacity(0.1),
-                  Colors.blueGrey.shade700.withOpacity(0.4),
-           
-                ],),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.blue.shade100.withOpacity(0.1),
+                        Colors.blueGrey.shade700.withOpacity(0.4),
+                      ],
+                    ),
                     border: Border.all(color: Colors.grey[300]!),
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
@@ -115,7 +117,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                                 ),
                                 Text("Today's Gain")
                               ],
-                            ), 
+                            ),
                             Row(
                               children: [
                                 Text(
@@ -172,7 +174,7 @@ class _PHoldingsPortfolioScreenState extends State<HoldingsPortfolioScreen> {
   String search = '';
   @override
   List<Holdings> filteredPositions = [];
- 
+
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => HoldingProvider()..GetHoldings(),
@@ -181,7 +183,8 @@ class _PHoldingsPortfolioScreenState extends State<HoldingsPortfolioScreen> {
           if (HoldingProvider.holdingValues == null) {
             return Center(child: CircularProgressIndicator());
           } else if (HoldingProvider.holdingValues!.isEmpty) {
-            return SizedBox(height: 500,
+            return SizedBox(
+              height: 500,
               child: Center(
                   child: Text(
                 "You have no Holdings. Place an order to open a new Holding.",
@@ -251,22 +254,24 @@ class _PHoldingsPortfolioScreenState extends State<HoldingsPortfolioScreen> {
                   var DisplayName = snapshot.data;
                   return Consumer<MarketFeedSocket>(
                     builder: (context, marketFeedSocket, child) {
-                      return Container(height: MediaQuery.of(context).size.height ,
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: HoldingProvider.holdingValues!.length,
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0), // Add this line
                           itemBuilder: (BuildContext context, int index) {
-                            var holdings = HoldingProvider.holdingValues![index];
-                        
+                            var holdings =
+                                HoldingProvider.holdingValues![index];
+
                             var quentity = holdings.holdingQuantity.toString();
                             var orderAvglastTradedPrice = holdings.buyAvgPrice;
                             var exchangeSegment =
                                 holdings.exchangeNSEInstrumentId;
                             var exchangeInstrumentID =
                                 holdings.exchangeNSEInstrumentId;
-                        
+
                             //  checkNSEorBSE(holdings.exchangeNSEInstrumentId.toString(),
                             //             holdings.exchangeBSEInstrumentId.toString());
                             final marketData = marketFeedSocket.getDataById(
@@ -315,7 +320,8 @@ class _PHoldingsPortfolioScreenState extends State<HoldingsPortfolioScreen> {
                                           ),
                                           Text(
                                             TotalBenifits != null
-                                                ? TotalBenifits.toStringAsFixed(2)
+                                                ? TotalBenifits.toStringAsFixed(
+                                                    2)
                                                 : 'Loading...',
                                             style: TextStyle(color: Colors.red),
                                           ),
@@ -343,7 +349,7 @@ class _PHoldingsPortfolioScreenState extends State<HoldingsPortfolioScreen> {
                                                 //         : Colors.red,
                                                 //   ),
                                                 // ),
-                        
+
                                                 Row(
                                                   children: [
                                                     Text(

@@ -173,7 +173,7 @@ class _MarketWatchScreenState extends State<MarketWatchScreen>
                                 ),
                               ],
                             ),
-                            MarketDataWidget(feed.bankmarketData),
+                            MarketDataWidget(),
                           ],
                         ),
                       )

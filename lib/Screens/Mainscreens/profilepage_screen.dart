@@ -5,12 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media_flutter/social_media_flutter.dart';
 import 'package:tradingapp/GetApiService/apiservices.dart';
 import 'package:tradingapp/Screens/buy_sell_screen.dart';
 import 'package:tradingapp/Authentication/auth_services.dart';
 import 'package:tradingapp/Authentication/login_screen.dart';
+import 'package:tradingapp/model/trade_balance_model.dart';
 import 'package:tradingapp/model/userProfile_model.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -59,7 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               future: ApiService().fetchUserProfile(token),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -74,10 +75,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              
-                            
-                            
-
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -88,12 +85,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text("Trading Balance"),
-                                      Text(
-                                        "₹ 4560060.12",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      )
+                                      ChangeNotifierProvider(
+                                        create: (context) =>
+                                            BalanceProvider()..GetBalance(),
+                                        child: Consumer<BalanceProvider>(
+                                          builder: (context, provider, child) {
+                                            if (provider.balance == null) {
+                                              return CircularProgressIndicator();
+                                            }
+                                            if (provider.balance!.isNotEmpty) {
+                                              var balance =
+                                                  provider.balance!.first;
+                                              return Text(
+                                                "₹ ${balance.netMarginAvailable}", // Replace `cashAvailable` with your actual field
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              );
+                                            } else {
+                                              // Handle the case when balance is empty
+                                              // For example, you can return a default text widget:
+                                              return Text(
+                                                "0",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      
                                     ],
                                   ),
                                   IconButton(
@@ -1068,5 +1092,40 @@ class CustomBasicInkWell extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class BalanceProvider with ChangeNotifier {
+  List<Balance>? _balance;
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  String searchTerm = '';
+  List<Balance>? get balance => _balance;
+
+  Future<void> GetBalance() async {
+    var response = await ApiService().GetBalance();
+    print("098765432$response");
+    if (response != null && response is Balance) {
+      _balance = [response]; // Wrap the Balance instance in a list
+    } else {
+      // Handle the case when response is null or not a Balance instance
+    }
+
+    print(response);
+    notifyListeners();
+    if (!_disposed) {
+      notifyListeners();
+    }
+  }
+
+  void setSearchTerm(String term) {
+    searchTerm = term;
+    notifyListeners();
   }
 }

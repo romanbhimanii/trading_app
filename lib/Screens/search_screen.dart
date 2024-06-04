@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tradingapp/GetApiService/apiservices.dart';
+import 'package:tradingapp/Screens/instrument_details_screen.dart';
+import 'package:tradingapp/Screens/wishlist_instrument_details_screen.dart';
 import 'package:tradingapp/sqlite_database/dbhelper.dart';
 
 void main() {
@@ -29,18 +31,15 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
- final ApiService _apiService = ApiService();
+  final ApiService _apiService = ApiService();
   List<dynamic> _searchResults = [];
   String _selectedFilter = 'ALL';
   Timer? _debounce;
 
   void _onSearch(String value) async {
-    
-   
-      var results = await _apiService.searchInstruments(value);
-      setState(() {
-        _searchResults = results;
-
+    var results = await _apiService.searchInstruments(value);
+    setState(() {
+      _searchResults = results;
     });
   }
 
@@ -79,18 +78,17 @@ class _SearchScreenState extends State<SearchScreen> {
         _filterButton('ALL'),
         _filterButton('Cash', filterCode: 'EQ'),
         _filterButton('Future', filterCode: 'FUTIDX'),
-        
         _filterButton('Option', filterCode: 'OPTSTK'),
       ],
     );
   }
 
-  Widget _filterButton(String title, {String? filterCode ,String? filterCode1}) {
+  Widget _filterButton(String title,
+      {String? filterCode, String? filterCode1}) {
     return TextButton(
       child: Text(title),
       onPressed: () {
         setState(() {
-          
           _selectedFilter = filterCode ?? 'ALL';
         });
       },
@@ -123,26 +121,54 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-Future<Widget> _buildListItem(Map<String, dynamic> item)async { {
-  
-  }
-  var close = await ApiService().GetBhavCopy( // Await the Future
-    item['ExchangeInstrumentID'].toString(),
-    item['ExchangeSegment'].toString(),
-  );
-  
+  Future<Widget> _buildListItem(Map<String, dynamic> item) async {
+    {}
+    var close = await ApiService().GetBhavCopy(
+      // Await the Future
+      item['ExchangeInstrumentID'].toString(),
+      item['ExchangeSegment'].toString(),
+    );
+
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: _getColorForSeries(item['Series']),
-        child: Text(item['Series'] ?? 'UNK', style: TextStyle(color: Colors.white, fontSize: 10)),
+        child: Text(item['Series'] ?? 'UNK',
+            style: TextStyle(color: Colors.white, fontSize: 10)),
       ),
-      title: Text(item['Name'] ?? 'No name'),
+      title: GestureDetector(
+          onTap: () {
+             Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ViewMoreInstrumentDetailScreen(
+                                                            exchangeInstrumentId:
+                                                                item['ExchangeInstrumentID']
+                                                                    .toString(),
+                                                            exchangeSegment:
+                                                                item['ExchangeSegment']
+                                                                    .toString(),
+                                                            lastTradedPrice:
+                                                                close.toString(),
+                                                            close: close.toString(),
+                                                            displayName:
+                                                                item['Name'],
+                                                          ),
+                                                        ),
+                                                      );
+          },
+          child: Text(item['Name'] ?? 'No name')),
       subtitle: Text(item['CompanyName'] ?? 'No company name'),
       trailing: IconButton(
         icon: Icon(Icons.add),
-        onPressed: () => _addInstrumentToWatchlist(item['ExchangeInstrumentID'].toString(), item['Name'],item['Series'],item['ExchangeSegment'].toString(),close.toString()),
+        onPressed: () => _addInstrumentToWatchlist(
+            item['ExchangeInstrumentID'].toString(),
+            item['Name'],
+            item['Series'],
+            item['ExchangeSegment'].toString(),
+            close.toString()),
       ),
-     );
+    );
   }
 
   Color _getColorForSeries(String? series) {
@@ -158,37 +184,49 @@ Future<Widget> _buildListItem(Map<String, dynamic> item)async { {
     }
   }
 
-  void _addInstrumentToWatchlist(String exchangeInstrumentId,String displayName,String Series ,String exchangeSegment,String close) async {
+  void _addInstrumentToWatchlist(
+      String exchangeInstrumentId,
+      String displayName,
+      String Series,
+      String exchangeSegment,
+      String close) async {
     final watchlists = await DatabaseHelper.instance.fetchWatchlists();
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Column(
-          children: [SizedBox(
-            height: 10,
-          ),
-            Text("Choose a watchlist to add $displayName ",style: TextStyle(
-              fontSize: 18,fontWeight: FontWeight.bold)
-                        ),
-             
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Text("Choose a watchlist to add $displayName ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             Expanded(
               child: ListView.builder(
                 itemCount: watchlists.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    title: Row(mainAxisAlignment: MainAxisAlignment.start,
-                      children: [Text(watchlists[index]['id'].toString()),
-                      SizedBox(width: 10, ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(watchlists[index]['id'].toString()),
+                        SizedBox(
+                          width: 10,
+                        ),
                         Text(watchlists[index]['name']),
-                        
                       ],
                     ),
-    
                     onTap: () async {
                       await DatabaseHelper.instance.addInstrumentToWatchlist(
-                        watchlists[index]['id'], exchangeInstrumentId, displayName,Series,exchangeSegment,index,close);
-                        await DatabaseHelper.instance.fetchWatchlists();
-                      Navigator.pop(context, true); 
+                          watchlists[index]['id'],
+                          exchangeInstrumentId,
+                          displayName,
+                          Series,
+                          exchangeSegment,
+                          index,
+                          close);
+                      await DatabaseHelper.instance.fetchWatchlists();
+                      Navigator.pop(context, true);
                     },
                   );
                 },
@@ -198,16 +236,22 @@ Future<Widget> _buildListItem(Map<String, dynamic> item)async { {
               ListTile(
                 leading: Icon(Icons.add),
                 title: Text('Create new watchlist'),
-                onTap: () => _createNewWatchlist(context, exchangeInstrumentId,displayName,Series,exchangeSegment,close),
+                onTap: () => _createNewWatchlist(context, exchangeInstrumentId,
+                    displayName, Series, exchangeSegment, close),
               ),
-          
           ],
         );
       },
     );
   }
 
-  Future<void> _createNewWatchlist(BuildContext context, String exchangeInstrumentId,String displayName,String Series, String exchangeSegment,String close) async {
+  Future<void> _createNewWatchlist(
+      BuildContext context,
+      String exchangeInstrumentId,
+      String displayName,
+      String Series,
+      String exchangeSegment,
+      String close) async {
     TextEditingController _nameController = TextEditingController();
     showDialog(
       barrierDismissible: true,
@@ -228,11 +272,18 @@ Future<Widget> _buildListItem(Map<String, dynamic> item)async { {
               child: Text('Create'),
               onPressed: () async {
                 if (_nameController.text.isNotEmpty) {
-                  int newWatchlistId = await DatabaseHelper.instance.addWatchlist(_nameController.text);
-                  await DatabaseHelper.instance.addInstrumentToWatchlist(newWatchlistId, exchangeInstrumentId,displayName,Series,exchangeSegment,0,close);
-                   
+                  int newWatchlistId = await DatabaseHelper.instance
+                      .addWatchlist(_nameController.text);
+                  await DatabaseHelper.instance.addInstrumentToWatchlist(
+                      newWatchlistId,
+                      exchangeInstrumentId,
+                      displayName,
+                      Series,
+                      exchangeSegment,
+                      0,
+                      close);
+
                   Navigator.of(context).pop();
-               
                 }
               },
             ),

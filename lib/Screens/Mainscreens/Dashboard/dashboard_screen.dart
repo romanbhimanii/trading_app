@@ -106,10 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           ),
         ),
       ),
-      body: Consumer<MarketFeedSocket>(builder: (context, feed, child) {
-        return feed.bankmarketData.isEmpty
-            ? Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
+      body: SingleChildScrollView(
                 child: Container(
                 color: Colors.grey[200],
                 child: Padding(
@@ -139,7 +136,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          MarketDataWidget(feed.bankmarketData),
+                                          MarketDataWidget(),
                                         ],
                                       ),
                                     ),
@@ -867,7 +864,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                               BorderRadius.circular(10),
                                         ),
                                         child: MarketDataWidget(
-                                            feed.bankmarketData)),
+                                            )),
                                     Text("")
                                   ],
                                 ),
@@ -890,24 +887,30 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ],
                   ),
                 ),
-              ));
-      }),
-    );
-  }
-}
+              )
+            ),
+          );
+        }
+      }
+      
 
 class MarketDataWidget extends StatefulWidget {
-  final Map<int, MarketData> marketData;
 
-  MarketDataWidget(this.marketData);
+
+  MarketDataWidget();
 
   @override
   _MarketDataWidgetState createState() => _MarketDataWidgetState();
 }
 
 class _MarketDataWidgetState extends State<MarketDataWidget> {
-  List<Map<String, dynamic>> getFormattedMarketData() {
-    return widget.marketData.entries.where((entry) {
+
+  @override
+  Widget build(BuildContext context) {
+   
+    return Consumer<MarketFeedSocket>(builder: (context, feed, child) {
+        List<Map<String, dynamic>> getFormattedMarketData() {
+    return feed.bankmarketData.entries.where((entry) {
       var name = IndexData.getIndexName(entry.key);
       return name != null && name != "Unknown Index";
     }).map((entry) {
@@ -921,13 +924,12 @@ class _MarketDataWidgetState extends State<MarketDataWidget> {
       };
     }).toList();
   }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Map<String, dynamic>> stocks = getFormattedMarketData();
+ List<Map<String, dynamic>> stocks = getFormattedMarketData();
     final filteredStocks =
         stocks.where((stock) => stock != "Unknown Index").toList();
-    return SingleChildScrollView(
+        return feed.bankmarketData.isEmpty
+            ? Center(child: CircularProgressIndicator()):
+    SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -1006,7 +1008,7 @@ class _MarketDataWidgetState extends State<MarketDataWidget> {
                           Get.to(() => ProfileScreen());
                         },
                         child: Container(
-                          width: 140,
+                          width: 145,
                           child: Container(
                               child: Card(
                             borderOnForeground: true,
@@ -1088,7 +1090,8 @@ class _MarketDataWidgetState extends State<MarketDataWidget> {
           ),
         ),
       ),
-    );
+     ); 
+    });
   }
 }
 // class MarketDataWidget extends StatelessWidget {
