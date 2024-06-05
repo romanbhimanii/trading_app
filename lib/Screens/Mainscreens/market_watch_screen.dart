@@ -1,16 +1,21 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:tradingapp/Authentication/GetApiService/apiservices.dart';
+import 'package:tradingapp/GetApiService/apiservices.dart';
+import 'package:tradingapp/Screens/Mainscreens/Dashboard/dashboard_screen.dart';
 import 'package:tradingapp/Screens/buy_sell_screen.dart';
 import 'package:tradingapp/Screens/instrument_details_screen.dart';
 import 'package:tradingapp/Screens/search_screen.dart';
 import 'package:tradingapp/Authentication/auth_services.dart';
+import 'package:tradingapp/Screens/wishlist_instrument_details_screen.dart';
 import 'package:tradingapp/Sockets/market_feed_scoket.dart';
 import 'package:tradingapp/sqlite_database/dbhelper.dart';
 import 'package:tradingapp/master/nscm_database.dart';
@@ -52,62 +57,170 @@ class _MarketWatchScreenState extends State<MarketWatchScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SearchScreen(
-                    onReturn: () => initializeDatabase(),
+    return Consumer<MarketFeedSocket>(builder: (context, feed, child) {
+      return feed.bankmarketData.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                actions: [
+                  IconButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SearchScreen(
+                            onReturn: () => initializeDatabase(),
+                          ),
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.search),
                   ),
-                ),
-              );
-            },
-            icon: Icon(Icons.search),
-          ),
-        ],
-        title: Text('Watchlist'),
-        bottom: _tabController != null
-            ? TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                tabs: _watchlistItems
-                    .map((item) => Tab(text: item['name'] as String))
-                    .toList(),
-              )
-            : null,
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: _watchlistItems
-            .map(
-              (item) => WatchlistTab(
-                watchlistId: item['id'] as int,
-              ),
-            )
-            .toList(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          String? itemName = await showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AddWatchlistDialog();
-            },
-          );
-          initializeDatabase();
+                ],
+                title: Text('Watchlist'),
+                bottom: _tabController != null
+                    ? PreferredSize(
+                        preferredSize: Size.fromHeight(170),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 50.0),
+                                  child: GestureDetector(
+                                    onLongPress: () async {},
+                                    child: TabBar(
+                                      tabAlignment: TabAlignment.start,
+                                      dividerColor: Colors.white,
+                                      controller: _tabController,
+                                      isScrollable: true,
+                                      tabs: _watchlistItems.map((item) {
+                                        return GestureDetector(
+                                          onLongPress: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    ListTile(
+                                                      leading:
+                                                          Icon(Icons.delete),
+                                                      title: Text('Delete'),
+                                                      onTap: () {
+                                                        _dbHelper
+                                                            .deleteWatchlist(_watchlistItems[
+                                                                    _tabController
+                                                                        .index]
+                                                                ['id'] as int)
+                                                            .then((value) =>
+                                                                initializeDatabase())
+                                                            .catchError(
+                                                                (error) =>
+                                                                    print(
+                                                                        error));
+                                                        Navigator.pop(context);
+                                                      },
+                                                    ),
+                                                    ListTile(
+                                                      leading:
+                                                          Icon(Icons.delete),
+                                                      title: Text('Delete'),
+                                                      onTap: () {
+                                                        // Handle delete
+                                                        Navigator.pop(context);
+                                                      },
+                                                    ),
+                                                    SizedBox(
+                                                      height: 50,
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child:
+                                              Tab(text: item['name'] as String),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 0,
+                                  child: IconButton(
+                                    onPressed: () async {
+                                      String? itemName = await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AddWatchlistDialog();
+                                        },
+                                      );
+                                      initializeDatabase();
 
-          if (itemName != null) {
-            await DatabaseHelper.instance.addWatchlist(itemName);
-            initializeDatabase();
-          }
-        },
-        child: Icon(Icons.add),
-      ),
-    );
+                                      if (itemName != null) {
+                                        await DatabaseHelper.instance
+                                            .addWatchlist(itemName);
+                                        initializeDatabase();
+                                        setState(() {
+                                          // _tabController =
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(Icons.add),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            MarketDataWidget(feed.bankmarketData),
+                          ],
+                        ),
+                      )
+                    : PreferredSize(
+                        preferredSize: Size.fromHeight(0),
+                        child: Container(),
+                      ),
+              ),
+              body: TabBarView(
+                controller: _tabController,
+                children: _watchlistItems
+                    .map(
+                      (item) => WatchlistTab(
+                        watchlistId: item['id'] as int,
+                      ),
+                    )
+                    .toList(),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchScreen(
+                        onReturn: () => initializeDatabase(),
+                      ),
+                    ),
+                  );
+                  // String? itemName = await showDialog(
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return AddWatchlistDialog();
+                  //   },
+                  // );
+                  // initializeDatabase();
+
+                  // if (itemName != null) {
+                  //   await DatabaseHelper.instance.addWatchlist(itemName);
+                  //   initializeDatabase();
+                  // }
+                },
+                child: Icon(Icons.add),
+              ),
+            );
+    });
   }
 }
 
@@ -145,7 +258,7 @@ class _WatchlistTabState extends State<WatchlistTab>
 
     DatabaseHelper.instance.updateAllCloseValues();
     _timer =
-        Timer.periodic(Duration(seconds: 5), (timer) => fetchInstruments());
+        Timer.periodic(Duration(seconds: 4), (timer) => fetchInstruments());
   }
 
   @override
@@ -189,9 +302,12 @@ class _WatchlistTabState extends State<WatchlistTab>
       SubscribedmarketData();
     }
 
-    setState(() {
-      _instruments = List<Map<String, dynamic>>.from(instruments);
-    });
+    if (mounted) {
+      // Check if the widget is still in the tree
+      setState(() {
+        _instruments = List<Map<String, dynamic>>.from(instruments);
+      });
+    }
   }
 
   Stream<String> streamInstrumentDetails(
@@ -202,8 +318,6 @@ class _WatchlistTabState extends State<WatchlistTab>
       yield jsonEncode(instrumentDetails);
     }
   }
-
-
 
   Future<List<String>> fetchAllCloseValues(
       List<Map<String, dynamic>> instruments) async {
@@ -238,9 +352,9 @@ class _WatchlistTabState extends State<WatchlistTab>
   @override
   Widget build(BuildContext context) {
     final marketSocket = Provider.of<MarketFeedSocket>(context);
-    
+
     return Padding(
-      padding: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.all(10.0),
       child: GestureDetector(
         onLongPress: () async {
           showModalBottomSheet(
@@ -301,19 +415,543 @@ class _WatchlistTabState extends State<WatchlistTab>
                       //   context,
                       //   MaterialPageRoute(
                       //     builder: (context) => InstrumentDetailsScreen(
-                           
+
                       //     ),
                       //   ),
                       // );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BuySellScreen(
-                            exchangeInstrumentId: exchangeInstrumentID,exchangeSegment: exchangeSegment,lastTradedPrice: marketData.price, close: closevalue1,displayName: displayName,
-                          ),
-                        ),
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => BuySellScreen(
+                      //       exchangeInstrumentId: exchangeInstrumentID,exchangeSegment: exchangeSegment,lastTradedPrice: marketData.price, close: closevalue1,displayName: displayName,
+                      //     ),
+                      //   ),
+                      // );
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) {
+                          return StatefulBuilder(
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                              return Consumer<MarketFeedSocket>(
+                                builder: (context, data, child) {
+                                  final marketData = data.getDataById(
+                                      int.parse(exchangeInstrumentID));
+                                  final priceChange = marketData != null
+                                      ? double.parse(marketData.price) -
+                                          double.parse(closevalue1)
+                                      : 0;
+                                  final priceChangeColor = priceChange > 0
+                                      ? Colors.green
+                                      : Colors.red;
+
+                                  if (marketData != null) {
+                                    return Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.9,
+                                      padding: EdgeInsets.all(16.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Container(
+                                            padding: EdgeInsets.all(10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(displayName,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 18)),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                      getExchangeSegmentName(
+                                                          int.parse(
+                                                              exchangeSegment)),
+                                                      style: TextStyle(
+                                                          fontSize: 12),
+                                                    )
+                                                  ],
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "₹${marketData.price.toString()}",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  priceChangeColor,
+                                                              fontSize: 18),
+                                                        ),
+                                                        Icon(
+                                                          priceChange > 0
+                                                              ? Icons
+                                                                  .arrow_drop_up
+                                                              : Icons
+                                                                  .arrow_drop_down,
+                                                          color:
+                                                              priceChangeColor,
+                                                          size: 30,
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          priceChange
+                                                              .toStringAsFixed(
+                                                                  2),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 16),
+                                                        ),
+                                                        Text(
+                                                          "(${marketData.percentChange.toString()}%)",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 16),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Colors.white,
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.all(10),
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            "OPEN",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black54),
+                                                          ),
+                                                          Text(marketData.Open),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.all(10),
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            "HIGH",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black54),
+                                                          ),
+                                                          Text(marketData.High),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.all(10),
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            "LOW",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black54),
+                                                          ),
+                                                          Text(marketData.Low),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.all(10),
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            "PREV. CLOSE",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black54),
+                                                          ),
+                                                          Text(marketData.close
+                                                              .toString()),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(),
+                                                Container(
+                                                  width: double.infinity,
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.all(5),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text('QTY',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        color: Colors
+                                                                            .black87,
+                                                                      )),
+                                                                  Text(
+                                                                      'BUY PRICE',
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black87,
+                                                                          fontWeight:
+                                                                              FontWeight.normal)),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Expanded(
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                      'BUY PRICE',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        color: Colors
+                                                                            .black87,
+                                                                      )),
+                                                                  Text('QTY',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                        color: Colors
+                                                                            .black87,
+                                                                      )),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Divider(
+                                                        thickness: 0.5,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            height: 200,
+                                                            width: 180,
+                                                            child: ListView
+                                                                .builder(
+                                                              shrinkWrap: true,
+                                                              itemCount:
+                                                                  marketData
+                                                                      .bids
+                                                                      .length,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                var bid =
+                                                                    marketData
+                                                                            .bids[
+                                                                        index];
+                                                                return Container(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              10),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                          '${bid.size}'),
+                                                                      Text(
+                                                                        '${bid.price}',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.green),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Container(
+                                                              height: 200,
+                                                              // width: 180,
+                                                              child: ListView
+                                                                  .builder(
+                                                                shrinkWrap:
+                                                                    true,
+                                                                itemCount:
+                                                                    marketData
+                                                                        .asks
+                                                                        .length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  var asks =
+                                                                      marketData
+                                                                              .asks[
+                                                                          index];
+                                                                  return Container(
+                                                                    padding:
+                                                                        EdgeInsets.all(
+                                                                            10),
+                                                                    child: Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                              '${asks.price}',
+                                                                              style: TextStyle(color: Colors.red)),
+                                                                          Text(
+                                                                              '${asks.size}'),
+                                                                        ]),
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Divider(
+                                                        thickness: 0.5,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(marketData
+                                                                .totalBuyQuantity),
+                                                            Text(
+                                                                "TOTAL QUANTITY"),
+                                                            Text(marketData
+                                                                .totalSellQuantity)
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Colors.white,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text("Option Chain"),
+                                                VerticalDivider(),
+                                                Text("Charts"),
+                                                VerticalDivider(),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ViewMoreInstrumentDetailScreen(
+                                                            exchangeInstrumentId:
+                                                                exchangeInstrumentID,
+                                                            exchangeSegment:
+                                                                exchangeSegment,
+                                                            lastTradedPrice:
+                                                                marketData
+                                                                    .price,
+                                                            close: closevalue1,
+                                                            displayName:
+                                                                displayName,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child:
+                                                        Text("Stock Details"))
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Container(
+                                            height: 60,
+                                            width: double.infinity,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              BuySellScreen(
+                                                            exchangeInstrumentId:
+                                                                exchangeInstrumentID,
+                                                            exchangeSegment:
+                                                                exchangeSegment,
+                                                            lastTradedPrice:
+                                                                marketData
+                                                                    .price,
+                                                            close: closevalue1,
+                                                            displayName:
+                                                                displayName,
+                                                            isBuy: true,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        color: Colors.green,
+                                                      ),
+                                                      child: Center(
+                                                          child: Text("BUY",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      18))),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              BuySellScreen(
+                                                            exchangeInstrumentId:
+                                                                exchangeInstrumentID,
+                                                            exchangeSegment:
+                                                                exchangeSegment,
+                                                            lastTradedPrice:
+                                                                marketData
+                                                                    .price,
+                                                            close: closevalue1,
+                                                            displayName:
+                                                                displayName,
+                                                            isBuy: false,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        color: Colors.red,
+                                                      ),
+                                                      child: Center(
+                                                          child: Text("SELL",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      18))),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                },
+                              );
+                            },
+                          );
+                        },
                       );
-                    
                     },
                     onLongPress: () {
                       showModalBottomSheet(
@@ -325,13 +963,20 @@ class _WatchlistTabState extends State<WatchlistTab>
                               final instrument = _instruments[index];
                               return ListTile(
                                 key: ValueKey(instrument['id']),
-                                title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(instrument['display_name']),
-                                    IconButton(onPressed: (){
-                                      _dbHelper.deleteInstrumentByExchangeInstrumentId(widget.watchlistId, exchangeInstrumentID);
-                                      Navigator.pop(context);
-                                    }, icon: Icon(Icons.delete))
+                                    IconButton(
+                                        onPressed: () {
+                                          _dbHelper
+                                              .deleteInstrumentByExchangeInstrumentId(
+                                                  widget.watchlistId,
+                                                  exchangeInstrumentID);
+                                          Navigator.pop(context);
+                                        },
+                                        icon: Icon(Icons.delete))
                                   ],
                                 ),
                                 leading: Icon(Icons.drag_handle),
@@ -347,6 +992,7 @@ class _WatchlistTabState extends State<WatchlistTab>
                                 _instruments.insert(newIndex, item);
                                 _dbHelper.updateOrderIndex(
                                     item['id'], newIndex);
+
                                 //MarketWatchScreen.initializeDatabase();
                               });
                             },
@@ -514,7 +1160,7 @@ class _AddWatchlistDialogState extends State<AddWatchlistDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Add to Watchlist'),
+      title: Text('Create Watchlist'),
       content: TextField(
         controller: _controller,
         decoration: InputDecoration(labelText: 'Name'),

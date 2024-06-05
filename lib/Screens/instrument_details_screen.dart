@@ -7,7 +7,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class InstrumentDetailsScreen extends StatefulWidget {
-  const InstrumentDetailsScreen({super.key});
+  final ExchangeInstrumentID;
+  final ExchangeInstrumentName;
+  const InstrumentDetailsScreen(
+      {Key? key, this.ExchangeInstrumentID, this.ExchangeInstrumentName})
+      : super(key: key);
+  
 
   @override
   State<InstrumentDetailsScreen> createState() =>
@@ -27,6 +32,7 @@ class _InstrumentDetailsScreenState extends State<InstrumentDetailsScreen> {
             decoration: BoxDecoration(color: Colors.grey[200]!),
             child: Column(
               children: [
+                
                 Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(

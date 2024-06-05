@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tradingapp/Authentication/GetApiService/apiservices.dart';
+import 'package:tradingapp/GetApiService/apiservices.dart';
 import 'package:tradingapp/sqlite_database/dbhelper.dart';
 
 void main() {
@@ -34,13 +34,13 @@ class _SearchScreenState extends State<SearchScreen> {
   String _selectedFilter = 'ALL';
   Timer? _debounce;
 
-  void _onSearch(String value) {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 300), () async {
+  void _onSearch(String value) async {
+    
+   
       var results = await _apiService.searchInstruments(value);
       setState(() {
         _searchResults = results;
-      });
+
     });
   }
 

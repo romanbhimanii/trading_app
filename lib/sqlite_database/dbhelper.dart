@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import '../Authentication/GetApiService/apiservices.dart';
+import '../GetApiService/apiservices.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -66,6 +66,7 @@ class DatabaseHelper {
     }
     return null;
   }
+
  Future<int> deleteInstrumentByExchangeInstrumentId(int watchlistId, String exchangeInstrumentId) async {
     final db = await instance.database;
     return await db.delete(
@@ -74,6 +75,7 @@ class DatabaseHelper {
       whereArgs: [watchlistId, exchangeInstrumentId],
     );
   }
+
   Future<int> addWatchlist(String name) async {
     final db = await instance.database;
     // Check if there are already 10 watchlists

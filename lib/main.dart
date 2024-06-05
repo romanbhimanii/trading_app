@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradingapp/Authentication/Login_bloc/login_bloc.dart';
-import 'package:tradingapp/Screens/Mainscreens/changenotifier.dart';
-import 'package:tradingapp/Screens/Mainscreens/dashboard_screen.dart';
+import 'package:tradingapp/Authentication/tpin_screen.dart';
+import 'package:tradingapp/Screens/IPOsScreen/IPOsScreen.dart';
+import 'package:tradingapp/Screens/option_chain_screen/option_chain_screen.dart';
+import 'package:tradingapp/Utils/changenotifier.dart';
 import 'package:tradingapp/Authentication/login_screen.dart';
-import 'package:tradingapp/Authentication/main_screen.dart';
+import 'package:tradingapp/Utils/Bottom_nav_bar_screen.dart';
 import 'package:tradingapp/Screens/Mainscreens/position_screen.dart';
 import 'package:tradingapp/Sockets/market_feed_scoket.dart';
 import 'package:tradingapp/master/nscm_provider.dart';
 
-import 'Authentication/GetApiService/apiservices.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   MarketFeedSocket marketFeedSocket = MarketFeedSocket();
-  ChangeNotifierProvider.value(
-    value: marketFeedSocket,
-    child: MyApp(),
-  );
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26000.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26001.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26002.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26003.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26004.toString());
-  await ApiService().MarketInstrumentSubscribe(1.toString(), 26005.toString());
   //await ApiService().GetNSCEMMaster();
   // marketFeedSocket.connect();
   // await NscmDataProvider().fetchAndStoreData();
@@ -40,12 +31,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(
           value: marketFeedSocket,
-          child: MyApp(),
         ),
-        
-        // ChangeNotifierProvider(
-        //   create: (context) => NscmDataProvider(),
-        // ),
         ChangeNotifierProvider(
           create: (_) => MarketFeedSocket()..connect(),
         ),
@@ -53,9 +39,8 @@ void main() async {
           create: (BuildContext context) => LoginBloc(),
         ),
         ChangeNotifierProvider(
-      create: (context) => TradeProvider(),
-      child: MyApp(),
-    ),
+          create: (context) => TradeProvider(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -68,11 +53,38 @@ Future<bool> isUserLoggedIn() async {
   return token != null;
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  bool? isLoginValue = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isLogin();
+    init();
+  }
+
+  Future<bool> isLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoginValue = prefs.getBool('isLogin');
+    return isLoginValue != null;
+  }
+
+  void init() async {
+    await Future.delayed(const Duration(seconds: 3));
+    FlutterNativeSplash.remove();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'My App',
+      debugShowCheckedModeBanner: false,
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -85,14 +97,17 @@ class MyApp extends StatelessWidget {
         ],
         child: ChangeNotifierProvider(
           create: (_) => MarketFeedSocket()..connect(),
+          // child: isLoginValue == false ? LoginScreen() : ValidPasswordScreen(),
           child: FutureBuilder<bool>(
-            future: isUserLoggedIn(),
+            future: isLogin(),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
               } else {
-                if (snapshot.data == true) {
-                  return MainScreen();
+                if (snapshot.data == true && isLoginValue == true) {
+                  return ValidPasswordScreen(
+                    isFromMainScreen: "true",
+                  );
                 } else {
                   return LoginScreen();
                 }

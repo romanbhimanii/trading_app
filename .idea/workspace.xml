@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="462cc7dd-218d-435f-af35-ffccc0395761" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/trading_app-iosStablev1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/md5-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/sha1-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/dependencies-accessors/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-hdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-hdpi/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-mdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-mdpi/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-night-hdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-night-mdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-night-xhdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-night-xxhdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-night-xxxhdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-xhdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-xhdpi/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-xxhdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-xxhdpi/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-xxxhdpi/android12splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-xxxhdpi/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/values-night-v31/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/values-v31/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/AppIcon/AppLogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/LoginScreenImages/ForgetPasswordIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/LoginScreenImages/UserProfile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/LoginScreenImages/ValidPinIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchBackground.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchBackground.imageset/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Authentication/const.dart/app_colors_const.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Authentication/const.dart/app_images_const.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Authentication/pinCodeWidgetScreen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/GlobalScreen/GlobalScreen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/IPOsScreen/IPOsScreen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/FII/DII/Model/fiidiimonthlydetails_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/highestRetrun&amp;Sectrol/Sector_in_focus_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/highestRetrun&amp;Sectrol/Sectoral_themes_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/highestRetrun&amp;Sectrol/highest_return_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/option_chain_screen/option_chain_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Screens/wishlist_instrument_details_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Utils/Bottom_nav_bar_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/userProfile_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/native_splash.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/dark-1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/dark-2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/dark-3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/dark-4x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/light-1x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/light-2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/light-3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/splash/img/light-4x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/analysis_options.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/launch_background.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/values-night/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/values-night/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/xml/network_security_config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/xml/network_security_config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Base.lproj/LaunchScreen.storyboard" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Base.lproj/LaunchScreen.storyboard" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/GetApiService/apiservices.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/GetApiService/apiservices.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/GetApiService/exchangeConverter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/exchangeConverter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/Login_bloc/login_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/Login_bloc/login_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/auth_services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/auth_services.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/const.dart/custom_textformfield.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/const.dart/custom_textformfield.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/forget_password_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/forget_password_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/home_screen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/login_data/login_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/login_data/login_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/main_screen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/tpin_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/tpin_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/validpin_bloc/validpin_bloc.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/validpin_bloc/validpin_event.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Authentication/validpin_bloc/validpin_state.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/MarketliveFeed/bloc/market_bloc.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/MarketliveFeed/bloc/market_event.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/MarketliveFeed/bloc/market_state.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/changenotifier.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/changenotifier.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/market_watch_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/market_watch_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/portfolio_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/portfolio_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/position_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/position_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/profilepage_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/profilepage_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/buy_sell_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/buy_sell_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/fii_dii_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/FII/DII/fii_dii_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/instrument_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/instrument_details_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/search_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/search_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Sockets/market_feed_scoket.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Sockets/market_feed_scoket.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/master/apiservice.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/master/apiservice.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/tradeOrder_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/tradeOrder_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/sqlite_database/dbhelper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/sqlite_database/dbhelper.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2hM9pZxosOjslTJtqLTiIqBJ8ks" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/admin/Downloads/trading_app-iosStablev1/assets/AppIcon&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\Downloads\trading_app-iosStablev1\assets\AppIcon" />
+      <recent name="C:\Users\admin\Downloads\trading_app-iosStablev1\assets\LoginScreenImages" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="462cc7dd-218d-435f-af35-ffccc0395761" name="Changes" comment="" />
+      <created>1717393262236</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717393262236</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

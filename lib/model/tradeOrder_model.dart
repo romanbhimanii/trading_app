@@ -389,7 +389,6 @@ class Positions {
 
 class OrderHistory {
   final String exchangeSegment;
-  
   final String buySell;
   final String symbol;
   final String instrumentName;
@@ -403,7 +402,6 @@ class OrderHistory {
   final String disclosedQty;
   final String validity;
   final DateTime orderEntryTime;
-  
   final String orderType;
   final String triggerPrice;
   final String status;

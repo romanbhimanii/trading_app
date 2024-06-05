@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:tradingapp/Authentication/GetApiService/exchangeConverter.dart';
+import 'package:tradingapp/GetApiService/apiservices.dart';
+import 'package:tradingapp/Utils/exchangeConverter.dart';
 import 'package:tradingapp/Sockets/market_feed_scoket.dart';
 
 class BuySellScreen extends StatefulWidget {
@@ -12,13 +15,15 @@ class BuySellScreen extends StatefulWidget {
   final String lastTradedPrice;
   final String close;
   final String displayName;
+  final bool isBuy;
   BuySellScreen(
       {Key? key,
       required this.exchangeInstrumentId,
       required this.exchangeSegment,
       required this.lastTradedPrice,
       required this.close,
-      required this.displayName})
+      required this.displayName,
+      required this.isBuy})
       : super(key: key);
 
   @override
@@ -27,7 +32,7 @@ class BuySellScreen extends StatefulWidget {
 
 class _BuySellScreenState extends State<BuySellScreen> {
   late TextEditingController _controller;
-
+  final TextEditingController QantityController = TextEditingController();
   String _selectedOption = 'Limit';
   String _selectedProductType = 'NRML';
   @override
@@ -100,7 +105,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
           final marketData =
               data.getDataById(int.parse(widget.exchangeInstrumentId));
           return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
@@ -183,6 +187,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                     height: 10,
                   ),
                   TextField(
+                    controller: QantityController,
                     decoration: InputDecoration(
                         hintText: "Enter Quantity",
                         labelText: "Quantity",
@@ -335,13 +340,39 @@ class _BuySellScreenState extends State<BuySellScreen> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               Column(
                 children: [
                   Container(
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final orderDetails = {
+                          "clientID": "A0031",
+                          "exchangeSegment": ExchangeConverter()
+                              .getExchangeSegmentName(
+                                  int.parse(widget.exchangeSegment))
+                              .toString(),
+                          "exchangeInstrumentID":
+                              widget.exchangeInstrumentId.toString(),
+                          "productType": "NRML",
+                          "orderType":
+                              _controller.text == widget.lastTradedPrice
+                                  ? "MARKET"
+                                  : "LIMIT",
+                          "orderSide": widget.isBuy ? "BUY" : "SELL",
+                          "timeInForce": "DAY",
+                          "disclosedQuantity": 0,
+                          "orderQuantity": QantityController.text,
+                          "limitPrice": 3200,
+                          "stopPrice": 0,
+                          "userID": "A0031"
+                        };
+                        ApiService().placeOrder(orderDetails);
+                      },
                       child: Text("Place Buy Order"),
                       style: ButtonStyle(
                         backgroundColor:

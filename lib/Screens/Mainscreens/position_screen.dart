@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tradingapp/Authentication/GetApiService/apiservices.dart';
-import 'package:tradingapp/Screens/Mainscreens/dashboard_screen.dart';
+import 'package:tradingapp/GetApiService/apiservices.dart';
+import 'package:tradingapp/Screens/Mainscreens/Dashboard/dashboard_screen.dart';
 import 'package:tradingapp/Screens/Mainscreens/portfolio_screen.dart';
 
 import 'package:tradingapp/Sockets/market_feed_scoket.dart';
@@ -20,6 +20,7 @@ class PositionScreen extends StatefulWidget {
 class _PositionScreenState extends State<PositionScreen>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -44,9 +45,10 @@ class _PositionScreenState extends State<PositionScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Position'),
-        bottom: TabBar(isScrollable: true,
-        tabAlignment: TabAlignment.start,
-      automaticIndicatorColorAdjustment: true,
+        bottom: TabBar(
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
+          automaticIndicatorColorAdjustment: true,
           controller: _tabController,
           tabs: const [
             Tab(text: 'Position'),
@@ -64,11 +66,11 @@ class _PositionScreenState extends State<PositionScreen>
             decoration: BoxDecoration(color: Colors.grey[200]),
             child: Column(
               children: [
-//#################################################### below code is for Order content##################################
+                //#################################################### below code is for Order content##################################
 
                 // Replace with your Order content
 
-//#################################################### below code is for Position content##################################
+                //#################################################### below code is for Position content##################################
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey[300]!),
@@ -98,7 +100,7 @@ class _PositionScreenState extends State<PositionScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Open Postions ^"),
+                    Text("Open Positions ^"),
                     TextButton(onPressed: () {}, child: Text("Exit")),
                   ],
                 ),
@@ -108,11 +110,10 @@ class _PositionScreenState extends State<PositionScreen>
                     child: PositionProviderScreen())
               ],
             ),
-          )
+          ),
           // Replace with your Position content
-          ,
 
-//#################################################### below code is for Position content##################################
+          //#################################################### below code is for Position content##################################
 
           Container(
             color: Colors.grey[200],
@@ -155,7 +156,7 @@ class _PositionScreenState extends State<PositionScreen>
           SizedBox(
               height: MediaQuery.of(context).size.height * 0.6,
               child: OrderProviderScreen()),
-              OrderHistoryProviderScreen(),
+          OrderHistoryProviderScreen(),
         ],
       ),
     );
@@ -166,12 +167,12 @@ class OrderProvider with ChangeNotifier {
   List<OrderValues>? _ordervalues;
 
   String searchTerm = '';
+
   List<OrderValues>? get ordervalues => _ordervalues;
 
   Future<void> GetOrder() async {
     final apiService = ApiService();
-    final response =
-        await apiService.GetOrder(); // Call your API function here
+    final response = await apiService.GetOrder(); // Call your API function here
     _ordervalues = OrderValues.fromJsonList(response);
     print(response);
     notifyListeners();
@@ -187,6 +188,7 @@ class PositionProvider with ChangeNotifier {
   List<Positions>? _positions;
 
   String searchTerm = '';
+
   List<Positions>? get positions => _positions;
 
   Future<void> getPosition() async {
@@ -217,6 +219,7 @@ class TradeProvider with ChangeNotifier {
   List<TradeOrder>? _positions;
 
   String searchTerm = '';
+
   List<TradeOrder>? get positions => _positions;
 
   Future<void> getTrades() async {
@@ -252,6 +255,7 @@ class _PositionProviderScreenState extends State<PositionProviderScreen> {
   String search = '';
   @override
   List<TradeOrder> filteredPositions = [];
+
   int getExchangeSegmentNumber(String exchangeSegment) {
     switch (exchangeSegment) {
       case 'NSECM':
@@ -308,8 +312,7 @@ class _PositionProviderScreenState extends State<PositionProviderScreen> {
                   var position = positionProvider.positions![index];
 
                   var quentity = position.quantity;
-                  var orderAvglastTradedPrice =
-                      position.actualBuyAveragePrice;
+                  var orderAvglastTradedPrice = position.actualBuyAveragePrice;
                   var exchangeSegment = position.exchangeSegment;
                   var exchangeInstrumentID = position.exchangeInstrumentId;
                   final marketData = marketFeedSocket
@@ -319,7 +322,8 @@ class _PositionProviderScreenState extends State<PositionProviderScreen> {
                   double? TotalBenifits;
                   if (lastTradedPrice != 'Loading...') {
                     TotalBenifits = (double.parse(lastTradedPrice) -
-                            double.parse( position.buyAveragePrice.toString()?? '0')) *
+                            double.parse(
+                                position.buyAveragePrice.toString() ?? '0')) *
                         (quentity ?? 0.0);
                   }
                   // print(positionProvider.positions![index].exchangeInstrumentID);
@@ -342,7 +346,7 @@ class _PositionProviderScreenState extends State<PositionProviderScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                          Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
@@ -455,6 +459,7 @@ class _TradeProviderScreenState extends State<TradeProviderScreen> {
   String search = '';
   @override
   List<TradeOrder> filteredPositions = [];
+
   int getExchangeSegmentNumber(String exchangeSegment) {
     switch (exchangeSegment) {
       case 'NSECM':
@@ -494,7 +499,6 @@ class _TradeProviderScreenState extends State<TradeProviderScreen> {
                 var exchangeSegment = position.exchangeSegment;
                 var exchangeInstrumentID = position.exchangeInstrumentID;
 
-                ;
                 ApiService().MarketInstrumentSubscribe(
                     getExchangeSegmentNumber(exchangeSegment).toString(),
                     exchangeInstrumentID.toString());
@@ -672,13 +676,16 @@ class _OrderProviderScreenState extends State<OrderProviderScreen> {
           } else {
             return Consumer<MarketFeedSocket>(
                 builder: (context, marketFeedSocket, child) {
+              var reversedOrderValues =
+                  OrderProvider.ordervalues!.reversed.toList();
               return ListView.builder(
+                scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: OrderProvider.ordervalues!.length,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0), // Add this line
+                itemCount: reversedOrderValues.length,
+                padding: const EdgeInsets.symmetric(vertical: 8.0)
+                    .copyWith(bottom: 100.0),
                 itemBuilder: (context, index) {
-                  var ordervalues = OrderProvider.ordervalues![index];
+                  var ordervalues = reversedOrderValues[index];
 
                   var orderAvglastTradedPrice =
                       ordervalues.orderAverageTradedPrice;
@@ -721,9 +728,51 @@ class _OrderProviderScreenState extends State<OrderProviderScreen> {
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
-                                Text(
-                                  OrderProvider.ordervalues![index].orderStatus,
-                                  style: TextStyle(color: Colors.red),
+                                Row(
+                                  children: [
+                                    Text(
+                                      OrderProvider
+                                          .ordervalues![index].orderStatus,
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    GestureDetector(
+                                      child: Icon(
+                                        Icons.info_outline,
+                                        color: Colors.black,
+                                        size: 17,
+                                      ),
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                OrderProvider
+                                                    .ordervalues![index]
+                                                    .orderStatus,
+                                              ),
+                                              content: Text(
+                                                OrderProvider
+                                                    .ordervalues![index]
+                                                    .cancelRejectReason,
+                                              ),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: Text('Close'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -819,8 +868,16 @@ class _OrderProviderScreenState extends State<OrderProviderScreen> {
 
 class OrderHistoryProvider with ChangeNotifier {
   List<OrderHistory>? _orderHistory;
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
 
   String searchTerm = '';
+
   List<OrderHistory>? get orderhistory => _orderHistory;
 
   Future<void> GetOrderHistroy() async {
@@ -830,6 +887,9 @@ class OrderHistoryProvider with ChangeNotifier {
     _orderHistory = OrderHistory.fromJsonList(response);
     print(response);
     notifyListeners();
+    if (!_disposed) {
+      notifyListeners();
+    }
   }
 
   void setSearchTerm(String term) {
@@ -840,10 +900,12 @@ class OrderHistoryProvider with ChangeNotifier {
 
 class OrderHistoryProviderScreen extends StatefulWidget {
   @override
-  _OrderHistoryProviderScreenState createState() => _OrderHistoryProviderScreenState();
+  _OrderHistoryProviderScreenState createState() =>
+      _OrderHistoryProviderScreenState();
 }
 
-class _OrderHistoryProviderScreenState extends State<OrderHistoryProviderScreen> {
+class _OrderHistoryProviderScreenState
+    extends State<OrderHistoryProviderScreen> {
   String search = '';
   List<OrderHistory> filteredPositions = [];
 
@@ -854,11 +916,9 @@ class _OrderHistoryProviderScreenState extends State<OrderHistoryProviderScreen>
         builder: (context, orderHistoryProvider, child) {
           var orderHistoryProvider = Provider.of<OrderHistoryProvider>(context);
 
-       
           if (orderHistoryProvider.orderhistory == null) {
             return Center(child: CircularProgressIndicator());
-            } else if (orderHistoryProvider.orderhistory!.isEmpty) {
-              
+          } else if (orderHistoryProvider.orderhistory!.isEmpty) {
             return Center(
                 child: Text(
                     style: TextStyle(),
@@ -868,20 +928,23 @@ class _OrderHistoryProviderScreenState extends State<OrderHistoryProviderScreen>
                 builder: (context, marketFeedSocket, child) {
               return ListView.builder(
                 shrinkWrap: true,
-             itemCount: orderHistoryProvider.orderhistory?.length ?? 0,
+                itemCount: orderHistoryProvider.orderhistory?.length ?? 0,
 
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0), // Add this line
                 itemBuilder: (context, index) {
                   var orderhistory = orderHistoryProvider.orderhistory?[index];
 
-                 var orderAvglastTradedPrice = orderhistory?.averagePrice ?? 'Default Value';
-var exchangeSegment = orderhistory?.exchangeSegment ?? 'Default Value';
-var buySell = orderhistory?.buySell ?? 'Default Value';
-var TotalQty = orderhistory?.totalQty ?? 'Default Value';
-var validity = orderhistory?.validity ?? 'Default Value';
+                  var orderAvglastTradedPrice =
+                      orderhistory?.averagePrice ?? 'Default Value';
+                  var exchangeSegment =
+                      orderhistory?.exchangeSegment ?? 'Default Value';
+                  var buySell = orderhistory?.buySell ?? 'Default Value';
+                  var TotalQty = orderhistory?.totalQty ?? 'Default Value';
+                  var validity = orderhistory?.validity ?? 'Default Value';
 
-                  var exchangeInstrumentID = orderhistory?.exchangeInstrumentID ?? 'Default Value';
+                  var exchangeInstrumentID =
+                      orderhistory?.exchangeInstrumentID ?? 'Default Value';
                   final marketData = marketFeedSocket
                       .getDataById(int.parse(exchangeInstrumentID.toString()));
                   var lastTradedPrice =
@@ -912,15 +975,15 @@ var validity = orderhistory?.validity ?? 'Default Value';
                               children: [
                                 Expanded(
                                   child: Text(
-                                 orderhistory?.tradingSymbol ?? 'Default Value'
-                                        
-                                    ,style: TextStyle(
+                                    orderhistory?.tradingSymbol ??
+                                        'Default Value',
+                                    style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
                                 Text(
-orderhistory?.status ?? 'Default Value',
+                                  orderhistory?.status ?? 'Default Value',
                                   style: TextStyle(color: Colors.red),
                                 ),
                               ],
@@ -935,10 +998,9 @@ orderhistory?.status ?? 'Default Value',
                                   Row(
                                     children: [
                                       Text(
-                                      buySell,
+                                        buySell,
                                         style: TextStyle(
-                                          color: 
-                                      orderhistory?.buySell 
+                                          color: orderhistory?.buySell
                                                       .toString() ==
                                                   'Buy'
                                               ? Colors.green
@@ -952,8 +1014,7 @@ orderhistory?.status ?? 'Default Value',
                                       SizedBox(
                                         width: 10,
                                       ),
-                                      Text(exchangeSegment 
-)
+                                      Text(exchangeSegment)
                                     ],
                                   ),
                                   Row(
@@ -986,8 +1047,7 @@ orderhistory?.status ?? 'Default Value',
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text( orderhistory!.optionType
-                                        ),
+                                    Text(orderhistory!.optionType),
                                   ],
                                 ),
                                 Text(
@@ -1010,4 +1070,3 @@ orderhistory?.status ?? 'Default Value',
     );
   }
 }
-
