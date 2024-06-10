@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:tradingapp/master/nscm.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

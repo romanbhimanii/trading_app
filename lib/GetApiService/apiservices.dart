@@ -1,11 +1,16 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:tradingapp/Authentication/auth_services.dart';
-import 'package:tradingapp/Screens/Mainscreens/Dashboard/FII/DII/fii_dii_screen.dart';
-import 'package:tradingapp/model/userProfile_model.dart';
-
+import 'package:tradingapp/Bottom_nav_bar_screen.dart';
+import 'package:tradingapp/DashBoard/Screens/FII/DII/Model/fiiHistoryDataModel.dart';
+import 'package:tradingapp/DashBoard/Screens/FII/DII/Model/stocksAndIndexDataModel.dart';
+import 'package:tradingapp/Portfolio/Screens/PortfolioScreen/portfolio_screen.dart';
+import 'package:tradingapp/Position/Screens/PositionScreen/position_screen.dart';
+import 'package:tradingapp/Profile/Models/UserProfileModel/userProfile_model.dart';
+import 'package:tradingapp/Sockets/market_feed_scoket.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 class ApiService {
   final String baseUrl = "http://14.97.72.10:3000";
 
@@ -184,55 +189,8 @@ class ApiService {
     }
   }
 
-  Future<Map<String, Map<String, double>>> fetchFiiDiiDetails() async {
-    try {
-      print("fetchFiiDiiDetails called");
-      final response = await http.post(Uri.parse(
-              // 'https://api.sensibull.com/v1/fii_dii_details_v2?year_month=2024-May'
-              'http://192.168.130.48:9010/v1/get_fii_history_data/'),
-          body: jsonEncode(
-            {},
-          ),
-          headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-          });
-//  'http://192.168.130.48:9010/v1/get_fii_history_data/'
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        print(response.body);
-        Map<String, Map<String, double>> result = {};
-        final jsonData = jsonDecode(response.body);
-        final successData = jsonData['success'];
-        final data = successData['data'];
-
-        data.forEach((key, value) {
-          final cashFii = value['cash']['fii'];
-          final cashDii = value['cash']['dii'];
-          final fnoFiiquantitywise = value['future']['fii'];
-          final fnoDiiAmountwise = value['future']['fii']['amount-wise'];
-          final fiiBuySellDifference = cashFii['buy_sell_difference'];
-          final diiBuySellDifference = cashDii['buy_sell_difference'];
-
-// print('Date: $date');
-
-          result[key] = {
-            'fii_buy_sell_difference': fiiBuySellDifference,
-            'dii_buy_sell_difference': diiBuySellDifference,
-          };
-        });
-
-        return result;
-      } else
-        return throw Exception('Failed to load data IN FII DII');
-    } catch (e) {
-      throw Exception('Failed to load data IN FII DII');
-      // print("Exception caught in FII DII API: $e");
-    }
-  }
-
-  Future<Map<String, dynamic>> fetchFiiDiiDetailsMonthly() async {
-  final response = await http.get(Uri.parse('http://192.168.130.48:9010/v1/get_fii_data_cash_fo_index_stocks/?type=cash'));
+  Future<Map<String, dynamic>> fetchFiiDiiDetailsMonthly({String? type}) async {
+  final response = await http.get(Uri.parse('http://192.168.130.48:9010/v1/get_fii_data_cash_fo_index_stocks/?type=$type'));
 
   if (response.statusCode == 200) {
     return json.decode(response.body) as Map<String, dynamic>;
@@ -379,7 +337,7 @@ class ApiService {
             'http://14.97.72.10:3000/enterprise/reports/trade?clientID=$clientId&userID=$userId&exchangeSegment=NSEFO&fromDate=2024-05-21&toDate=2024-05-31'),
         headers: {
           'Authorization': '$apiToken',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
       );
       if (response.statusCode == 200) {
@@ -490,7 +448,7 @@ class ApiService {
 
   Future<void> placeOrder(Map<String, dynamic> orderDetails) async {
   try {print("tryis calling");
-final String? apiToken = await getToken();
+  final String? apiToken = await getToken();
       final response = await http.post(
       Uri.parse('http://14.97.72.10:3000/enterprise/orders'),
       headers: <String, String>{
@@ -499,10 +457,12 @@ final String? apiToken = await getToken();
       },
       body: jsonEncode(orderDetails),
     );
-print(response.body);
+    print(response.body);
     if (response.statusCode != 200) {
       throw Exception('Failed to place order');
     } else {
+      Get.offAll(() => MainScreen());
+      PositionProvider().getPosition();
       Get.snackbar('Order Placed', 'Order placed successfully');
     }
   }
@@ -541,6 +501,111 @@ print(response.body);
       // This will catch any exceptions thrown from the try block
       print('Caught error: $e');
       throw Exception('Failed to load user profile due to an error: $e');
+    }
+  }
+
+  Future<List<dynamic>> fetchMarketUpdatesData() async {
+    try {
+      final response = await http.get(
+          Uri.parse('http://14.97.72.10:3000/enterprise/common/holidaylist'));
+
+      if (response.statusCode == 200) {
+        // If the server returns a 200 OK response, parse the JSON
+        // and return the list of market updates.
+        List<dynamic> marketUpdates = jsonDecode(response.body);
+        return marketUpdates;
+      } else {
+        // If the server did not return a 200 OK response,
+        // throw an exception.
+        throw Exception('Failed to load market updates');
+      }
+    } catch (e) {
+      // Handle error
+      print('Error fetching market updates: $e');
+      throw Exception('Failed to load market updates');
+    }
+  }
+
+  Future<Map<String, Map<String, double>>> fetchFiiDiiDetails() async {
+    try {
+      print("fetchFiiDiiDetails called");
+      final response = await http.post(Uri.parse(
+        // 'https://api.sensibull.com/v1/fii_dii_details_v2?year_month=2024-May'
+          'http://192.168.130.48:9010/v1/get_fii_history_data/'),
+          body: jsonEncode(
+            {},
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+          });
+//  'http://192.168.130.48:9010/v1/get_fii_history_data/'
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print(response.body);
+        Map<String, Map<String, double>> result = {};
+        final jsonData = jsonDecode(response.body);
+        final successData = jsonData['success'];
+        final data = successData['data'];
+
+        data.forEach((key, value) {
+          final cashFii = value['cash']['fii'];
+          final cashDii = value['cash']['dii'];
+          final fnoFiiquantitywise = value['future']['fii'];
+          final fnoDiiAmountwise = value['future']['fii']['amount-wise']['net_oi'];
+          final fiiBuySellDifference = cashFii['buy_sell_difference'];
+          final diiBuySellDifference = cashDii['buy_sell_difference'];
+
+          result[key] = {
+            'fii_buy_sell_difference': fiiBuySellDifference,
+            'dii_buy_sell_difference': diiBuySellDifference,
+            'dii_fnoDii_amount_wise': fnoDiiAmountwise,
+          };
+        });
+
+        return result;
+      } else
+        return throw Exception('Failed to load data IN FII DII');
+    } catch (e) {
+      throw Exception('Failed to load data IN FII DII');
+      // print("Exception caught in FII DII API: $e");
+    }
+  }
+
+  Future<FiiHistoryData> fetchFiiDiiDetails1() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.130.48:9010/v1/get_fii_history_data/'),
+        body: jsonEncode({}),
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        dynamic jsonData = jsonDecode(response.body);
+        return FiiHistoryData.fromJson(jsonData['success']);
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to load data from API');
+    }
+  }
+
+  Future<List<FiiData>> fetchStockAndIndexData({String? type}) async {
+    final String apiUrl = 'http://192.168.130.48:9010/v1/get_fii_data_cash_fo_index_stocks/?type=$type';
+
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body)['result'];
+      List<FiiData> fiiDataList = jsonResponse.map((json) => FiiData.fromJson(json)).toList();
+      return fiiDataList;
+    } else {
+      throw Exception('Failed to load data');
     }
   }
 }

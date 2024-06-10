@@ -18,6 +18,7 @@ class MarketData {
   final String Open;
   final String High;
   final String Low;
+  final String AverageTradedPrice;
 
   MarketData({
     required this.price,
@@ -30,6 +31,7 @@ class MarketData {
     required this.Open,
     required this.High,
     required this.Low,
+    required this.AverageTradedPrice,
   });
 
   factory MarketData.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class MarketData {
       Open: json['Touchline']['Open'].toString() ?? '0',
       High: json['Touchline']['High'].toString() ?? '0',
       Low: json['Touchline']['Low'].toString() ?? '0',
+      AverageTradedPrice: json['Touchline']['AverageTradedPrice'].toString() ?? '0',
       bids: bidsList,
       asks: AsksList,
     );

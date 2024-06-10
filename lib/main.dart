@@ -5,15 +5,12 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradingapp/Authentication/Login_bloc/login_bloc.dart';
-import 'package:tradingapp/Authentication/tpin_screen.dart';
-import 'package:tradingapp/Screens/IPOsScreen/IPOsScreen.dart';
-import 'package:tradingapp/Screens/option_chain_screen/option_chain_screen.dart';
+import 'package:tradingapp/Authentication/Screens/login_screen.dart';
 import 'package:tradingapp/Utils/changenotifier.dart';
-import 'package:tradingapp/Authentication/login_screen.dart';
-import 'package:tradingapp/Utils/Bottom_nav_bar_screen.dart';
-import 'package:tradingapp/Screens/Mainscreens/position_screen.dart';
+import 'package:tradingapp/Position/Screens/PositionScreen/position_screen.dart';
 import 'package:tradingapp/Sockets/market_feed_scoket.dart';
 import 'package:tradingapp/master/nscm_provider.dart';
+import 'Authentication/Screens/tpin_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,6 +91,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(
             create: (context) => NscmDataProvider(),
           ),
+          ChangeNotifierProvider(create: (_) => PositionProvider()),
         ],
         child: ChangeNotifierProvider(
           create: (_) => MarketFeedSocket()..connect(),
