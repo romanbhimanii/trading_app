@@ -529,6 +529,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                       _positions = value.sortByCMV(false, value.positions?.toList(),
                       );
                     },
+
+
                   );
                 }
                 Navigator.pop(context);
