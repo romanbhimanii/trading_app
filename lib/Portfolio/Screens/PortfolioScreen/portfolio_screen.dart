@@ -23,7 +23,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   double todaysGain = 0.0;
   bool isSorted = false;
   List<Positions>? _positions;
-  List<Positions>? _positions1;
   List<String> isAToZorZToA = [];
   List<String> isLowToHighOrHighToLow = [];
   List<String> daysPLIsLowToHighOrHighToLow = [];
@@ -256,11 +255,15 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: BouncingScrollPhysics(),
-                              itemCount: isSorted == true ? _positions?.length : positionProvider.positions!.length,
+                              itemCount: isSorted == true
+                                  ? _positions?.length
+                                  : positionProvider.positions!.length,
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               itemBuilder: (context, index) {
-                                var position = isSorted == true ? _positions![index] : positionProvider.positions![index];
+                                var position = isSorted == true
+                                    ? _positions![index]
+                                    : positionProvider.positions![index];
 
                                 var quantity = position.quantity;
                                 var orderAvgLastTradedPrice =
@@ -516,23 +519,27 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 if (isLowToHighOrHighToLow.contains('LowToHigh')) {
                   setState(() {
                     isSorted = true;
-                    _positions = value.sortByCMV(true, _positions1?.toList());
+                    _positions = value.sortByCMV(true, value.positions?.toList());
                   });
                 }
                 if (isLowToHighOrHighToLow.contains('HighToLow')) {
-                  setState(() {
-                    isSorted = true;
-                    _positions = value.sortByCMV(false, _positions1?.toList());
-                  });
+                  setState(
+                    () {
+                      isSorted = true;
+                      _positions = value.sortByCMV(false, value.positions?.toList(),
+                      );
+                    },
+                  );
                 }
                 Navigator.pop(context);
               },
               child: Container(
                 height: 35,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(05),
-                    border: Border.all(color: Colors.black),
-                    color: Colors.white,),
+                  borderRadius: BorderRadius.circular(05),
+                  border: Border.all(color: Colors.black),
+                  color: Colors.white,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Center(
@@ -552,7 +559,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             ),
             InkWell(
               onTap: () {
-                setState((){
+                setState(() {
                   isAToZorZToA.clear();
                   isLowToHighOrHighToLow.clear();
                   daysPLIsLowToHighOrHighToLow.clear();
@@ -615,8 +622,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   isAToZorZToA.clear();
                   isAToZorZToA.add('alphabeticalAZ');
                   isSorted = true;
-                  // _positions = value.sortPositionsByAlphabet(true, value.positions?.toList());
-                  _positions1 = value.sortPositionsByAlphabet(true, value.positions?.toList());
+                  _positions = value.sortPositionsByAlphabet(
+                      true, value.positions?.toList());
                 });
               },
               child: Container(
@@ -632,7 +639,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   child: Center(
                     child: Text(
                       'A-Z',
-                      style: GoogleFonts.inter(color: Colors.black, fontSize: 13),
+                      style:
+                          GoogleFonts.inter(color: Colors.black, fontSize: 13),
                     ),
                   ),
                 ),
@@ -645,8 +653,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   isAToZorZToA.clear();
                   isAToZorZToA.add('alphabeticalZA');
                   isSorted = true;
-                  // _positions = value.sortPositionsByAlphabet(false, value.positions?.toList());
-                  _positions1 = value.sortPositionsByAlphabet(false, value.positions?.toList());
+                  _positions = value.sortPositionsByAlphabet(
+                      false, value.positions?.toList());
                 });
               },
               child: Container(
@@ -662,7 +670,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   child: Center(
                     child: Text(
                       'Z-A',
-                      style: GoogleFonts.inter(color: Colors.black, fontSize: 13),
+                      style:
+                          GoogleFonts.inter(color: Colors.black, fontSize: 13),
                     ),
                   ),
                 ),
@@ -709,7 +718,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 height: 30,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(05),
-                    color: isLowToHighOrHighToLow.contains('LowToHigh') ? Colors.grey[200] : Colors.white,
+                    color: isLowToHighOrHighToLow.contains('LowToHigh')
+                        ? Colors.grey[200]
+                        : Colors.white,
                     border: Border.all(color: Colors.black)),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),

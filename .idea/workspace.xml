@@ -5,62 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="462cc7dd-218d-435f-af35-ffccc0395761" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/AppIcon/AppIcon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/SectorScreen/SectorScreen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/trading_app-iosStablev1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/trading_app-iosStablev1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.6.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.6.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.6.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.6.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.6.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/change_password_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/Screens/change_password_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/const.dart/app_colors_const.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/const.dart/app_colors_const.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/const.dart/app_images_const.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/const.dart/app_images_const.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/const.dart/custom_textformfield.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/const.dart/custom_textformfield.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/forget_password_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/Screens/forget_password_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/Screens/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/pinCodeWidgetScreen.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Authentication/tpin_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Authentication/Screens/tpin_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/GetApiService/apiservices.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/GetApiService/apiservices.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/GlobalScreen/GlobalScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/GlobalScreen/GlobalScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/IPOsScreen/IPOsScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/IPOsScreen/IPOsScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/FII/DII/Model/fiidiimonthlydetails_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/FII/DII/Model/fiidiimonthlydetails_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/FII/DII/fii_dii_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/FII/DII/fii_dii_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/DashBoardScreen/dashboard_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/highestRetrun&amp;Sectrol/Sector_in_focus_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/HighestReturnScreens/Sector_in_focus_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/highestRetrun&amp;Sectrol/Sectoral_themes_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/HighestReturnScreens/Sectoral_themes_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/Dashboard/highestRetrun&amp;Sectrol/highest_return_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/HighestReturnScreens/highest_return_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/market_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/market_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/market_watch_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/MarketWatch/Screens/MarketWatchScreen/market_watch_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/portfolio_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Portfolio/Screens/PortfolioScreen/portfolio_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/position_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Position/Screens/PositionScreen/position_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Mainscreens/profilepage_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Profile/Screens/ProfileScreen/profilepage_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/buy_sell_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/BuyOrSellScreen/buy_sell_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/getvalues.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/FII/DII/Model/fiiHistoryDataModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/instrument_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/MarketWatch/Screens/InstrumentDetailScreen/instrument_details_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/option_chain_screen/option_chain_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/option_chain_screen/option_chain_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/search_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/MarketWatch/Screens/SearchScreen/search_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/wishlist_instrument_details_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/MarketWatch/Screens/WishListInstrumentDetailScreen/wishlist_instrument_details_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Sockets/market_feed_scoket.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Sockets/market_feed_scoket.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Utils/Bottom_nav_bar_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Bottom_nav_bar_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Utils/exchangeConverter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Utils/exchangeConverter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/master/apiservice.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/master/apiservice.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/master/nscm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/master/nscm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/master/nscm_database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/master/nscm_database.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/master/reposotry" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/FII/DII/Model/stocksAndIndexDataModel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/tradeOrder_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Position/Models/TradeOrderModel/tradeOrder_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/userProfile_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Profile/Models/UserProfileModel/userProfile_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/wishlist_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DashBoard/Screens/NotificationScreen/NotificationScreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Portfolio/Screens/PortfolioScreen/portfolio_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Portfolio/Screens/PortfolioScreen/portfolio_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
